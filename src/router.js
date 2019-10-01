@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Dois from "./views/Dois";
 
 Vue.use(Router);
 
@@ -10,13 +10,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/doi",
       name: "dois",
-      component: () => import("./views/Dois.vue")
+      component: Dois
     },
     {
       path: "/doi/:id",

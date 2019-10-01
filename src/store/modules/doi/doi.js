@@ -4,6 +4,12 @@ import mutations from "./mutations";
 
 const state = {
   loadingState: false,
+  doi: null,
+  doiAttachments: [],
+  doiAgents: [],
+  doiDates: [],
+  doiGeolocations: [],
+  doiRelatedIdentifiers: [],
   dois: [],
   doiCount: 0
 };

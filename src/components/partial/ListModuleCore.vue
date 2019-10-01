@@ -2,7 +2,7 @@
   <div class="list-module-core">
     <!-- PAGINATION -->
     <div
-      v-if="items && items.length > 0"
+      v-if="itemCount > 0"
       class="pagination d-flex flex-column flex-md-row justify-space-between align-center"
     >
       <div>
@@ -34,7 +34,13 @@
     <!-- DATA TABLE -->
     <v-card class="table-card my-1">
       <v-card-title>
-        <span id="table-title" class="text-uppercase">{{ module }}</span>
+        <v-icon class="mr-2" color="#1db954" large>fas fa-list</v-icon>
+        <v-badge color="#1db954">
+          <span id="table-title" class="text-uppercase">{{ module }}</span>
+          <template v-slot:badge>
+            <span class="font-weight-bold">{{ itemCount }}</span>
+          </template>
+        </v-badge>
         <div class="flex-grow-1"></div>
         <v-text-field
           v-model="searchTable"
@@ -47,23 +53,36 @@
       </v-card-title>
 
       <v-data-table
-        class="elevation-1"
         :headers="headers"
         hide-default-footer
         :items="items"
-        :items-per-page="searchParameters.paginateBy"
-        :loading="loadingState"
+        :items-per-page.sync="searchParameters.paginateBy"
         multi-sort
-        :page="searchParameters.page"
+        :page.sync="searchParameters.page"
         :search="searchTable"
+        :loading="loadingState"
         show-expand
         :expanded.sync="expanded"
         expand-icon="fas fa-caret-down"
       >
+        <template v-slot:progress>
+          <v-progress-linear indeterminate color="#1db954"></v-progress-linear>
+        </template>
+
         <template v-if="module === 'doi'" v-slot:item.identifier="{ item }">
           <v-btn :to="{ path: '/doi/' + item.id }" color="#1db954" text>{{
             item.identifier
-            }}</v-btn>
+          }}</v-btn>
+        </template>
+
+        <template
+          v-if="module === 'doi'"
+          v-slot:item.datacite_created="{ item }"
+        >
+          <span v-if="item.datacite_created">{{
+            new Date(item.datacite_created).toDateString()
+          }}</span>
+          <span v-else>{{ item.datacite_created }}</span>
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
@@ -78,7 +97,7 @@
 
     <!-- PAGINATION -->
     <div
-      v-if="items && items.length > 0"
+      v-if="itemCount > 0"
       class="pagination d-flex flex-column flex-md-row justify-space-between align-center"
     >
       <div>
@@ -161,7 +180,7 @@ export default {
   watch: {
     searchParameters: {
       handler: function(newVal) {
-        this.$store.dispatch("getDois", newVal);
+        this.$emit("search-parameters-changed", newVal);
       },
       deep: true
     }
@@ -177,5 +196,13 @@ export default {
 .table-card >>> .v-input--is-focused .fa-times {
   color: #191414 !important;
   caret-color: #191414 !important;
+}
+
+.table-card >>> .no-wrap {
+  white-space: nowrap;
+}
+
+.table-card >>> .no-wrap > span:after {
+  content: "\00a0";
 }
 </style>

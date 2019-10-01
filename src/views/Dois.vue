@@ -2,9 +2,7 @@
   <v-container
     class="dois"
     :class="{ 'drawer-padding': global.drawerRight }"
-    fluid
   >
-
     <list-module-core
       module="doi"
       :headers="headers"
@@ -12,6 +10,7 @@
       :item-count="doi.doiCount"
       :loading-state="doi.loadingState"
       :search-parameters="searchParameters"
+      v-on:search-parameters-changed="onSearchParametersChange"
     />
   </v-container>
 </template>
@@ -19,7 +18,6 @@
 <script>
 import { mapState } from "vuex";
 import ListModuleCore from "../components/partial/ListModuleCore";
-import isEmpty from "lodash/isEmpty";
 
 export default {
   name: "Dois",
@@ -28,12 +26,16 @@ export default {
   },
   data: () => ({
     headers: [
-      { text: "DOI", value: "identifier" },
-      { text: "Author", value: "creators" },
-      { text: "Year", value: "publication_year" },
-      { text: "Title", value: "title" },
-      { text: "Type", value: "resource" },
-      { text: "DataCite registration", value: "datacite_created" }
+      { text: "DOI", value: "identifier", class: "no-wrap" },
+      { text: "Author", value: "creators", class: "no-wrap" },
+      { text: "Year", value: "publication_year", class: "no-wrap" },
+      { text: "Title", value: "title", class: "no-wrap" },
+      { text: "Type", value: "resource", class: "no-wrap" },
+      {
+        text: "DataCite registration",
+        value: "datacite_created",
+        class: "no-wrap"
+      }
     ],
     searchParameters: {
       page: 1,
@@ -47,16 +49,22 @@ export default {
   watch: {
     "$route.query": {
       handler: function(newVal) {
-        if (newVal) {
-          if (newVal.q) this.$store.dispatch("getDoisFast", newVal.q);
-          else if (!isEmpty(newVal)) this.$store.dispatch("getDois", newVal);
-          else this.$store.dispatch("getDois", this.searchParameters);
-        }
+        this.$store.dispatch("getDois", {
+          routeParams: newVal,
+          searchParams: this.searchParameters
+        });
       },
       immediate: true
     }
   },
   methods: {
+    onSearchParametersChange(newParams) {
+      this.$store.dispatch("getDois", {
+        routeParams: this.$route.query,
+        searchParams: newParams
+      });
+    },
+
     setDefaultSearchParameters() {
       return {
         page: 1,

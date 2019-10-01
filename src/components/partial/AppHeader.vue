@@ -54,12 +54,11 @@
     <!-- DRAWER RIGHT -->
     <v-navigation-drawer
       :value="drawerRight"
-      v-if="$route.path === '/doi'"
+      v-if="$route.path === '/'"
       app
       clipped
       color="#1db954"
       dark
-      disable-resize-watcher
       expand-on-hover
       right
       @input="changeDrawerRightState"
@@ -98,7 +97,6 @@
     </v-navigation-drawer>
 
     <!-- HEADER -->
-
     <v-app-bar
       app
       clipped-right
@@ -116,14 +114,6 @@
 
       <v-toolbar-items class="d-none d-sm-block">
         <v-btn text title="Home" to="/">Home</v-btn>
-        <v-btn
-          v-if="fastSearch"
-          text
-          title="Portfolio"
-          :to="{ path: '/doi', query: { q: this.fastSearch } }"
-          >DOIs</v-btn
-        >
-        <v-btn v-else text title="DOIs" to="/doi">DOIs</v-btn>
       </v-toolbar-items>
 
       <div class="flex-grow-1"></div>
@@ -140,16 +130,16 @@
 
       <v-app-bar-nav-icon
         @click.stop="drawerRight = !drawerRight"
-        v-if="$route.path === '/doi'"
+        v-if="$route.path === '/'"
       ></v-app-bar-nav-icon>
     </v-app-bar>
 
-    <!-- Fullscreen landing image -->
+    <!-- LANDING IMAGE -->
     <div
       class="fullscreen-landing-image"
       :style="{ height: $vuetify.breakpoint.smAndDown ? '45vh' : '35vh' }"
     >
-      <div class="d-flex flex-column justify-center fill-height">
+      <div class="d-flex flex-column justify-center" style="height: 100%">
         <div class="text-center font-weight-bold page-header">SARV DOI</div>
         <div class="mx-auto">
           <v-text-field
@@ -160,7 +150,7 @@
             color="#1db954"
             dark
             filled
-            label="DOI search..."
+            placeholder="DOI search..."
             append-outer-icon="fas fa-search"
             @click:append-outer="doFastSearch"
           ></v-text-field>
@@ -179,10 +169,7 @@ export default {
     fastSearch: null,
     drawer: null,
     drawerRight: null,
-    routes: [
-      { icon: "fas fa-home", text: "Home", path: "/" },
-      { icon: "fas fa-table", text: "DOIs", path: "/doi" }
-    ],
+    routes: [{ icon: "fas fa-home", text: "Home", path: "/" }],
     otherLinks: [
       {
         icon: "fas fa-database",
@@ -212,11 +199,10 @@ export default {
       if (this.fastSearch) {
         if (this.$route.query.q) {
           if (this.$route.query.q !== this.fastSearch) {
-            this.$router.push({ path: "/doi", query: { q: this.fastSearch } });
+            this.$router.push({ path: "/", query: { q: this.fastSearch } });
           }
-        } else
-          this.$router.push({ path: "/doi", query: { q: this.fastSearch } });
-      } else if (this.$route.path === "/doi" && this.$route.query.q) this.$router.push({ path: "/doi" });
+        } else this.$router.push({ path: "/", query: { q: this.fastSearch } });
+      } else if (this.$route.path === "/" && this.$route.query.q) this.$router.push({ path: "/" });
     }, 500),
 
     changeDrawerRightState(drawerState) {
