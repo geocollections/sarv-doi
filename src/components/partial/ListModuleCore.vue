@@ -70,9 +70,12 @@
         </template>
 
         <template v-if="module === 'doi'" v-slot:item.identifier="{ item }">
-          <v-btn :to="{ path: '/doi/' + item.id }" color="#1db954" text>{{
-            item.identifier
-          }}</v-btn>
+          <v-btn
+            :to="{ path: '/10.15152/GEO.' + item.id }"
+            color="#1db954"
+            text
+            >{{ item.identifier }}</v-btn
+          >
         </template>
 
         <template

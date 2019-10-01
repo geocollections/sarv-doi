@@ -9,12 +9,16 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: "*",
+      redirect: "/"
+    },
+    {
       path: "/",
       name: "dois",
       component: Dois
     },
     {
-      path: "/doi/:id",
+      path: "/10.15152/GEO.:id(\\d+)",
       name: "doi",
       component: () => import("./components/doi/Doi.vue")
     }
