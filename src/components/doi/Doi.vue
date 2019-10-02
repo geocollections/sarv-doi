@@ -369,8 +369,6 @@ export default {
     ]
   }),
   mounted() {
-    // eslint-disable-next-line no-console
-    console.log(this.doi);
     if (this.$refs.doiBanner) {
       this.$vuetify.goTo(this.$refs.doiBanner, {
         duration: 300,
