@@ -1,8 +1,5 @@
 <template>
-  <v-container
-    class="dois"
-    :class="{ 'drawer-padding': global.drawerRight }"
-  >
+  <v-container class="dois" :class="{ 'drawer-padding': global.drawerRight }">
     <list-module-core
       module="doi"
       :headers="headers"

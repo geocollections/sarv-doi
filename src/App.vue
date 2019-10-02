@@ -23,4 +23,9 @@ export default {
 #doi-public {
   font-family: "Nunito", sans-serif !important;
 }
+
+/* Overlay must hide everything except app header which has z-index of 1100 */
+.v-overlay--active {
+  z-index: 1075 !important;
+}
 </style>

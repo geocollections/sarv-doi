@@ -215,6 +215,7 @@ export default {
 <style scoped>
 #app-header {
   color: #191414 !important;
+  z-index: 1100; /* This z-index must be above other z-indexes, for example leaflet has 1000 max */
 }
 
 .fullscreen-landing-image {
