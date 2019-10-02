@@ -77,6 +77,10 @@ const actions = {
 
   setLoadingState({ commit }, state) {
     commit("SET_LOADING_STATE", { loadingState: state });
+  },
+
+  resetDoi({ commit }) {
+    commit("RESET_DOI");
   }
 };
 

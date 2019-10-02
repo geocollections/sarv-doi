@@ -221,6 +221,20 @@
             </v-card>
           </v-col>
 
+          <!-- MAP -->
+          <v-col cols="12" class="py-3" v-if="computedGeolocations.length > 0">
+            <v-card class="elevation-3">
+              <v-card-title>
+                <span>Map</span>
+                <v-spacer />
+                <v-icon color="#191414">far fa-map</v-icon>
+              </v-card-title>
+
+              <Map :locations="computedGeolocations" />
+              <!--              <Map :polygon="testGeometry.coordinates[0]" />-->
+            </v-card>
+          </v-col>
+
           <!-- RELATED GEOLOCATIONS -->
           <v-col cols="12" class="py-3" v-if="doi.doiGeolocations.length > 0">
             <v-card class="mobile-override elevation-3">
@@ -258,19 +272,6 @@
                   >
                 </template>
               </v-data-table>
-            </v-card>
-          </v-col>
-
-          <!-- MAP -->
-          <v-col cols="12" class="py-3" v-if="computedGeolocations.length > 0">
-            <v-card class="elevation-3">
-              <v-card-title>
-                <span>Map</span>
-                <v-spacer />
-                <v-icon color="#191414">far fa-map</v-icon>
-              </v-card-title>
-
-              <Map :locations="computedGeolocations" />
             </v-card>
           </v-col>
 
@@ -312,6 +313,18 @@ export default {
   name: "Doi",
   components: { FilePreview, Map },
   data: () => ({
+    testGeometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [59.41276, 27.261542],
+          [59.409472, 27.36855],
+          [59.37269, 27.364148],
+          [59.375975, 27.257254],
+          [59.41276, 27.261542]
+        ]
+      ]
+    },
     generalDataHeaders: [
       { text: "Citation", value: "id" },
       { text: "DOI", value: "identifier" },
@@ -344,7 +357,7 @@ export default {
       { text: "Preview", value: "id", align: "center" }
     ],
     agentHeaders: [
-      { text: "Name", value: "name" },
+      { text: "Name", value: "name" }, // Todo: orcid link here
       { text: "Affiliation", value: "affiliation" },
       { text: "Relation", value: "agent_type__value" },
       { text: "ORCID", value: "orcid" }
@@ -368,6 +381,9 @@ export default {
       { text: "Remarks", value: "remarks" }
     ]
   }),
+  created() {
+    console.log(this)
+  },
   mounted() {
     if (this.$refs.doiBanner) {
       this.$vuetify.goTo(this.$refs.doiBanner, {
@@ -376,6 +392,10 @@ export default {
         offset: 35
       });
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.$store.dispatch("resetDoi");
+    next();
   },
   computed: {
     ...mapState(["doi"]),
@@ -496,6 +516,10 @@ export default {
 .general-info-card >>> .v-data-table td {
   height: unset;
   min-height: 48px;
+}
+
+.general-info-card >>> .v-data-table__mobile-row__cell {
+  text-align: left;
 }
 
 .wrap-link >>> .v-btn__content {

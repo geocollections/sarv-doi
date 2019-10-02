@@ -197,7 +197,7 @@ export default {
       this.map.on("zoomend", event => (this.zoom = event.target._zoom));
 
       if (this.areLocationsSet) this.setMarkers(this.locations);
-      if (this.isPolygonSet) this.setPolygon(this.polygon);
+      else if (this.isPolygonSet) this.setPolygon(this.polygon);
     },
 
     handleLayerChange(event) {
@@ -243,6 +243,13 @@ export default {
       let bounds = new L.featureGroup(this.markers).getBounds();
       this.map.fitBounds(bounds);
       this.map.setZoom(this.map.getBoundsZoom(bounds) - 2);
+    },
+
+    setPolygon(arrayOfPoints) {
+      let polygon = L.polygon(arrayOfPoints, { color: "#1db954" }).addTo(
+        this.map
+      );
+      this.map.fitBounds(polygon.getBounds());
     },
 
     getGeocollectionsUrl(params) {

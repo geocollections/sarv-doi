@@ -30,6 +30,15 @@ const mutations = {
 
   SET_DOI_RELATED_IDENTIFIERS(state, results) {
     state.doiRelatedIdentifiers = results;
+  },
+
+  RESET_DOI(state) {
+    state.doi = null;
+    state.doiAttachments = [];
+    state.doiAgents = [];
+    state.doiDates = [];
+    state.doiGeolocations = [];
+    state.doiRelatedIdentifiers = [];
   }
 };
 
