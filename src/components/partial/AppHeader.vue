@@ -157,13 +157,11 @@
     >
       <div class="d-flex flex-column justify-center" style="height: 100%">
         <div
-          class="text-center font-weight-bold page-header animated fadeInLeft faster"
+          class="text-center font-weight-bold page-header animated fadeIn faster"
         >
           SARV·DOI
         </div>
-        <div
-          class="text-center page-subheader py-2 animated fadeInRight faster"
-        >
+        <div class="text-center page-subheader py-2 animated fadeIn faster">
           Geoscience Data Repository
         </div>
         <div class="mx-auto">

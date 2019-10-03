@@ -384,7 +384,6 @@ export default {
     },
     showGeolocationsTable: false,
     generalDataHeaders: [
-      // Todo: align left!!!
       { text: "Citation", value: "id" },
       { text: "DOI", value: "identifier" },
       { text: "Resource type", value: "resource_type__value" },
@@ -416,7 +415,7 @@ export default {
       { text: "Preview", value: "id", align: "center" }
     ],
     agentHeaders: [
-      { text: "Name", value: "name" }, // Todo: orcid link here
+      { text: "Name", value: "name" },
       { text: "Relation", value: "agent_type__value" }
     ],
     relatedIdentifiersHeaders: [
@@ -568,6 +567,8 @@ export default {
 
 .general-info-card >>> .v-data-table__mobile-row__cell {
   text-align: left;
+  width: 100%;
+  padding-left: 10px;
 }
 
 .wrap-link >>> .v-btn__content {
