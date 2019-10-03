@@ -181,7 +181,24 @@
                 disable-sort
                 :headers="agentHeaders"
                 :items="doi.doiAgents"
-              ></v-data-table>
+              >
+                <template v-slot:item.name="{ item }">
+                  <v-btn
+                    v-if="item.orcid"
+                    class="text-none wrap-link pa-0"
+                    height="unset"
+                    min-width="unset"
+                    text
+                    color="#1db954"
+                    :href="getOrcidUrl(item.orcid)"
+                    :title="getOrcidUrl(item.orcid)"
+                    target="OrcidWindow"
+                  >
+                    {{ item.name }}
+                  </v-btn>
+                  <span v-else>{{ item.name }}</span>
+                </template>
+              </v-data-table>
             </v-card>
           </v-col>
 
@@ -327,12 +344,20 @@
     </v-row>
   </v-container>
 
-  <v-container v-else class="doi-detail-error" fluid>
-    <v-card :loading="doi.loadingState">
-      <span v-if="!doi.loadingState">
-        Todo: NO DOI
-      </span>
-    </v-card>
+  <v-container v-else class="doi-detail-error">
+    <v-alert
+      v-if="!doi.loadingState"
+      border="right"
+      color="red"
+      elevation="3"
+      icon="fas fa-exclamation-circle"
+      prominent
+    >
+      <span
+        >Unfortunately DOI with an identifier
+        <b>{{ $route.path.substring(1) }}</b> couldn't be found.</span
+      >
+    </v-alert>
   </v-container>
 </template>
 
@@ -392,9 +417,7 @@ export default {
     ],
     agentHeaders: [
       { text: "Name", value: "name" }, // Todo: orcid link here
-      { text: "Affiliation", value: "affiliation" },
-      { text: "Relation", value: "agent_type__value" },
-      { text: "ORCID", value: "orcid" }
+      { text: "Relation", value: "agent_type__value" }
     ],
     relatedIdentifiersHeaders: [
       { text: "Relation", value: "relation_type__value" },
@@ -476,6 +499,10 @@ export default {
           return `https://doi.org/${url}`;
         }
       }
+    },
+
+    getOrcidUrl(orcid) {
+      if (orcid) return "https://orcid.org/" + orcid;
     },
 
     getCitation(doi) {
