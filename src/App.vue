@@ -2,7 +2,7 @@
   <v-app id="doi-public">
     <app-header />
 
-    <router-view />
+    <router-view style="margin-bottom: 141px" />
 
     <app-footer />
   </v-app>

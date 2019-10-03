@@ -4,7 +4,7 @@
     color="#1db954"
     dark
   >
-    <div class="footer-logos">
+    <div class="footer-logos my-2">
       <a
         v-for="link in imageLinks"
         :key="link.url"
@@ -98,12 +98,14 @@ export default {
   opacity: 0.9;
   border-top: 2px solid rgba(0, 68, 148, 0.1);
   text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer-logos {
   max-height: 3.8rem;
   overflow: hidden;
-  margin: 10px 0 10px 0;
 }
 .footer-logo {
   height: 50px;
@@ -115,6 +117,12 @@ export default {
 }
 .footer-text > a:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 650px) {
+  .footer {
+    font-size: 0.6rem;
+  }
 }
 
 @media (max-width: 599px) {
