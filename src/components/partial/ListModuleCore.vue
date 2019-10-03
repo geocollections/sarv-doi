@@ -45,7 +45,7 @@
         <v-text-field
           v-model="searchTable"
           append-outer-icon="fas fa-search"
-          label="Search"
+          label="Filter records"
           clear-icon="fas fa-times"
           clearable
           color="#1db954"
@@ -173,13 +173,6 @@ export default {
       { text: "Show 1000 results per page", value: 1000 }
     ]
   }),
-  mounted() {
-    this.$vuetify.goTo("#table-title", {
-      duration: 300,
-      easing: "easeInCubic",
-      offset: 115
-    });
-  },
   watch: {
     searchParameters: {
       handler: function(newVal) {

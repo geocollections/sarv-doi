@@ -225,13 +225,15 @@
           <v-col cols="12" class="py-3" v-if="computedGeolocations.length > 0">
             <v-card class="elevation-3">
               <v-card-title>
-                <span>Map</span>
+                <span>Related geolocations</span>
                 <v-spacer />
                 <v-icon color="#191414">far fa-map</v-icon>
               </v-card-title>
 
-              <Map :locations="computedGeolocations" />
-              <!--              <Map :polygon="testGeometry.coordinates[0]" />-->
+              <Map
+                :locations="computedGeolocations"
+                :polygon="testGeometry.coordinates[0]"
+              />
             </v-card>
           </v-col>
 
@@ -239,39 +241,69 @@
           <v-col cols="12" class="py-3" v-if="doi.doiGeolocations.length > 0">
             <v-card class="mobile-override elevation-3">
               <v-card-title>
-                <span>Related geolocations</span>
+                <span>Related geolocations (table)</span>
                 <v-spacer />
-                <v-icon color="#191414">fas fa-globe-americas</v-icon>
+                <v-btn
+                  icon
+                  color="#1db954"
+                  @click="showGeolocationsTable = !showGeolocationsTable"
+                >
+                  <v-icon>{{
+                    showGeolocationsTable
+                      ? "fas fa-chevron-up"
+                      : "fas fa-chevron-down"
+                  }}</v-icon>
+                </v-btn>
               </v-card-title>
-              <v-data-table
-                disable-sort
-                :headers="geolocationsHeaders"
-                :items="doi.doiGeolocations"
-              >
-                <template v-slot:item.locality="{ item }">
-                  <v-btn
-                    class="text-none wrap-link pa-0"
-                    height="unset"
-                    min-width="unset"
-                    text
-                    color="#1db954"
-                    :href="
-                      getGeocollectionsUrl({
-                        object: 'locality',
-                        id: item.locality
-                      })
-                    "
-                    :title="
-                      getGeocollectionsUrl({
-                        object: 'locality',
-                        id: item.locality
-                      })
-                    "
-                    target="GeocollectionsWindow"
-                    >{{ item.locality__locality_en }}</v-btn
+              <v-expand-transition>
+                <div v-show="showGeolocationsTable">
+                  <v-data-table
+                    disable-sort
+                    :headers="geolocationsHeaders"
+                    :items="doi.doiGeolocations"
                   >
-                </template>
-              </v-data-table>
+                    <template v-slot:item.place="{ item }">
+                      <v-btn
+                        v-if="item.locality"
+                        class="text-none wrap-link pa-0"
+                        height="unset"
+                        min-width="unset"
+                        text
+                        color="#1db954"
+                        :href="
+                          getGeocollectionsUrl({
+                            object: 'locality',
+                            id: item.locality
+                          })
+                        "
+                        :title="
+                          getGeocollectionsUrl({
+                            object: 'locality',
+                            id: item.locality
+                          })
+                        "
+                        target="GeocollectionsWindow"
+                        >{{ item.locality__locality_en }}</v-btn
+                      >
+                      <span v-else>{{ item.place }}</span>
+                    </template>
+
+                    <template v-slot:item.point="{ item }">
+                      <span
+                        v-if="item.point_latitude && item.point_longitude"
+                        >{{
+                          `${item.point_latitude} ${item.point_longitude}`
+                        }}</span
+                      >
+                      <span v-else-if="item.point">{{
+                        `${item.point.split(" ")[0]} ${
+                          item.point.split(" ")[1]
+                        }`
+                      }}</span>
+                    </template>
+                  </v-data-table>
+                </div>
+              </v-expand-transition>
             </v-card>
           </v-col>
 
@@ -325,7 +357,9 @@ export default {
         ]
       ]
     },
+    showGeolocationsTable: false,
     generalDataHeaders: [
+      // Todo: align left!!!
       { text: "Citation", value: "id" },
       { text: "DOI", value: "identifier" },
       { text: "Resource type", value: "resource_type__value" },
@@ -372,8 +406,7 @@ export default {
     geolocationsHeaders: [
       { text: "Named place", value: "place" },
       { text: "Point (Lat Long)", value: "point" },
-      { text: "Polygon", value: "polygon" },
-      { text: "Locality from database", value: "locality", align: "right" }
+      { text: "Polygon", value: "polygon" }
     ],
     datesHeaders: [
       { text: "Date/range", value: "date" },
@@ -381,18 +414,6 @@ export default {
       { text: "Remarks", value: "remarks" }
     ]
   }),
-  created() {
-    console.log(this)
-  },
-  mounted() {
-    if (this.$refs.doiBanner) {
-      this.$vuetify.goTo(this.$refs.doiBanner, {
-        duration: 300,
-        easing: "easeInCubic",
-        offset: 35
-      });
-    }
-  },
   beforeRouteLeave(to, from, next) {
     this.$store.dispatch("resetDoi");
     next();

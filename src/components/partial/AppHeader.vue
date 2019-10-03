@@ -29,14 +29,13 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-subheader>OTHER LINKS</v-subheader>
+        <v-subheader>OTHER RESOURCES</v-subheader>
         <v-list-item
           v-for="item in otherLinks"
           :key="item.text"
           :href="item.url"
-          target="_blank"
+          target="OtherLinkWindow"
           :title="item.text"
-          rel="noopener noreferrer"
         >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -109,7 +108,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="pr-9 align-center">
-        <span class="font-weight-bold">SARV DOI</span>
+        <span class="font-weight-bold">SARV·DOI</span>
       </v-toolbar-title>
 
       <v-toolbar-items class="d-none d-sm-block">
@@ -118,15 +117,32 @@
 
       <div class="flex-grow-1"></div>
 
-      <v-btn
-        icon
-        href="https://edit.geocollections.info/"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="SARV Data Management"
-      >
-        <v-icon>fas fa-database</v-icon>
-      </v-btn>
+      <v-toolbar-items class="d-none d-sm-block">
+        <v-menu v-model="showOtherLinkDropdown" offset-y z-index="1101">
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on">
+              Resources&nbsp;
+              <v-icon>{{
+                showOtherLinkDropdown ? "fas fa-caret-up" : "fas fa-caret-down"
+              }}</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list color="#1db954" dark dense>
+            <v-list-item
+              v-for="item in otherLinks"
+              :key="item.text"
+              :href="item.url"
+              target="OtherLinkWindow"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ item.text }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-toolbar-items>
 
       <v-app-bar-nav-icon
         @click.stop="drawerRight = !drawerRight"
@@ -140,7 +156,10 @@
       :style="{ height: $vuetify.breakpoint.smAndDown ? '45vh' : '35vh' }"
     >
       <div class="d-flex flex-column justify-center" style="height: 100%">
-        <div class="text-center font-weight-bold page-header">SARV DOI</div>
+        <div class="text-center font-weight-bold page-header">SARV·DOI</div>
+        <div class="text-center page-subheader py-2">
+          Geoscience Data Repository
+        </div>
         <div class="mx-auto">
           <v-text-field
             v-model.trim="fastSearch"
@@ -170,11 +189,37 @@ export default {
     drawer: null,
     drawerRight: null,
     routes: [{ icon: "fas fa-home", text: "Home", path: "/" }],
+    showOtherLinkDropdown: false,
     otherLinks: [
       {
         icon: "fas fa-database",
-        text: "SARV Data Management",
-        url: "https://edit.geocollections.info/"
+        text: "Geolocations portal",
+        url: "https://geocollections.info/"
+      },
+      {
+        icon: "fas fa-sitemap",
+        text: "NATARC",
+        url: "https://natarc.ut.ee/"
+      },
+      {
+        icon: "fas fa-tree",
+        text: "Baltic fossils",
+        url: "https://fossiilid.info/"
+      },
+      {
+        icon: "far fa-gem",
+        text: "Minerals and rocks",
+        url: "https://kivid.info/"
+      },
+      {
+        icon: "fas fa-book",
+        text: "Geological literature",
+        url: "http://geoloogia.info/"
+      },
+      {
+        icon: "fas fa-globe",
+        text: "Geoloogiafond",
+        url: "https://www.egt.ee/et/fond-search"
       }
     ]
   }),
@@ -219,19 +264,30 @@ export default {
 }
 
 .fullscreen-landing-image {
+  z-index: 15 !important;
+  min-height: 225px;
   margin-top: 48px;
   background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 0.2) 0%,
       rgba(44, 53, 49, 0.7) 100%
     ),
-    url("https://files.geocollections.info/img/geocollections-front/rock.jpg");
+    url("https://files.geocollections.info/img/doi/header.jpg");
   background-size: cover;
 }
 
 .page-header {
-  font-size: 4rem;
+  font-size: 3.5rem;
   color: #ffffff;
   text-shadow: 2px 2px 4px #191414;
+  line-height: 90%;
+}
+
+.page-subheader {
+  font-size: 2rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px #191414;
+  font-weight: 600;
+  line-height: 90%;
 }
 </style>
