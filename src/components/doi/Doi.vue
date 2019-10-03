@@ -31,7 +31,7 @@
       <v-col cols="12" md="6">
         <v-row no-gutters>
           <!-- GENERAL INFO -->
-          <v-col cols="12">
+          <v-col cols="12 pt-3">
             <v-card class="general-info-card elevation-3">
               <v-card-title>
                 <span>General info</span>
@@ -150,7 +150,7 @@
       <v-col cols="12" md="6">
         <v-row no-gutters>
           <!-- FILES -->
-          <v-col cols="12" class="pb-3" v-if="doi.doiAttachments.length > 0">
+          <v-col cols="12" class="py-3" v-if="doi.doiAttachments.length > 0">
             <v-card class="mobile-override elevation-3">
               <v-card-title>
                 <span>Files</span>
@@ -458,16 +458,20 @@ export default {
             return {
               lat: location.point_latitude,
               lng: location.point_longitude,
-              id: location.locality,
-              name: location.locality__locality_en
+              id: location.locality ? location.locality : null,
+              name: location.place
+                ? location.place
+                : location.locality__locality_en
             };
           } else if (location.point) {
             let point = location.point.split(" ");
             return {
               lat: point[0],
               lng: point[1],
-              id: location.locality,
-              name: location.locality__locality_en
+              id: location.locality ? location.locality : null,
+              name: location.place
+                ? location.place
+                : location.locality__locality_en
             };
           } else return [];
         });

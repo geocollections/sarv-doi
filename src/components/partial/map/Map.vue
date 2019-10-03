@@ -222,9 +222,9 @@ export default {
             lng: parseFloat(entity.lng)
           },
           { icon: this.markerIcon }
-        )
-          .addTo(this.map)
-          .on("click", () =>
+        ).addTo(this.map);
+        if (entity.id)
+          marker.on("click", () =>
             window.open(
               this.getGeocollectionsUrl({
                 object: "locality",
