@@ -34,7 +34,7 @@
     <!-- DATA TABLE -->
     <v-card class="table-card my-1">
       <v-card-title>
-        <v-icon class="mr-2" color="#1db954" large>fas fa-list</v-icon>
+        <v-icon class="mr-2" color="#191414" large>fas fa-list</v-icon>
         <v-badge color="#1db954">
           <span id="table-title" class="text-uppercase">{{ module }}</span>
           <template v-slot:badge>

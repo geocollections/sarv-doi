@@ -73,7 +73,7 @@
 
           <v-list-item>
             <v-list-item-content>
-              Tavaline otsing
+              Regular search
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -88,7 +88,7 @@
 
           <v-list-item>
             <v-list-item-content>
-              Advanced otsing
+              Advanced searvh
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -156,8 +156,14 @@
       :style="{ height: $vuetify.breakpoint.smAndDown ? '45vh' : '35vh' }"
     >
       <div class="d-flex flex-column justify-center" style="height: 100%">
-        <div class="text-center font-weight-bold page-header">SARV·DOI</div>
-        <div class="text-center page-subheader py-2">
+        <div
+          class="text-center font-weight-bold page-header animated fadeInLeft faster"
+        >
+          SARV·DOI
+        </div>
+        <div
+          class="text-center page-subheader py-2 animated fadeInRight faster"
+        >
           Geoscience Data Repository
         </div>
         <div class="mx-auto">
