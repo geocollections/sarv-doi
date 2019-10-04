@@ -51,49 +51,49 @@
     </v-navigation-drawer>
 
     <!-- DRAWER RIGHT -->
-    <v-navigation-drawer
-      :value="drawerRight"
-      v-if="$route.path === '/'"
-      app
-      clipped
-      color="#1db954"
-      dark
-      expand-on-hover
-      right
-      @input="changeDrawerRightState"
-    >
-      <!-- SEARCH -->
-      <v-list dense>
-        <v-list-group color="#191414" prepend-icon="fas fa-search" value="true">
-          <template v-slot:activator>
-            <v-list-item-content>
-              <v-list-item-title>Search</v-list-item-title>
-            </v-list-item-content>
-          </template>
+    <!--    <v-navigation-drawer-->
+    <!--      :value="drawerRight"-->
+    <!--      v-if="$route.path === '/'"-->
+    <!--      app-->
+    <!--      clipped-->
+    <!--      color="#1db954"-->
+    <!--      dark-->
+    <!--      expand-on-hover-->
+    <!--      right-->
+    <!--      @input="changeDrawerRightState"-->
+    <!--    >-->
+    <!--      &lt;!&ndash; SEARCH &ndash;&gt;-->
+    <!--      <v-list dense>-->
+    <!--        <v-list-group color="#191414" prepend-icon="fas fa-search" value="true">-->
+    <!--          <template v-slot:activator>-->
+    <!--            <v-list-item-content>-->
+    <!--              <v-list-item-title>Search</v-list-item-title>-->
+    <!--            </v-list-item-content>-->
+    <!--          </template>-->
 
-          <v-list-item>
-            <v-list-item-content>
-              Regular search
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
+    <!--          <v-list-item>-->
+    <!--            <v-list-item-content>-->
+    <!--              Regular search-->
+    <!--            </v-list-item-content>-->
+    <!--          </v-list-item>-->
+    <!--        </v-list-group>-->
+    <!--      </v-list>-->
 
-      <!-- ADVANCED SEARCH -->
-      <v-list dense>
-        <v-list-group color="#191414" prepend-icon="fas fa-search-plus">
-          <template v-slot:activator>
-            <v-list-item-title>Advanced search</v-list-item-title>
-          </template>
+    <!--      &lt;!&ndash; ADVANCED SEARCH &ndash;&gt;-->
+    <!--      <v-list dense>-->
+    <!--        <v-list-group color="#191414" prepend-icon="fas fa-search-plus">-->
+    <!--          <template v-slot:activator>-->
+    <!--            <v-list-item-title>Advanced search</v-list-item-title>-->
+    <!--          </template>-->
 
-          <v-list-item>
-            <v-list-item-content>
-              Advanced searvh
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
-    </v-navigation-drawer>
+    <!--          <v-list-item>-->
+    <!--            <v-list-item-content>-->
+    <!--              Advanced searvh-->
+    <!--            </v-list-item-content>-->
+    <!--          </v-list-item>-->
+    <!--        </v-list-group>-->
+    <!--      </v-list>-->
+    <!--    </v-navigation-drawer>-->
 
     <!-- HEADER -->
     <v-app-bar
@@ -101,7 +101,6 @@
       clipped-right
       dark
       dense
-      hide-on-scroll
       fixed
       color="#1db954"
     >
@@ -144,10 +143,10 @@
         </v-menu>
       </v-toolbar-items>
 
-      <v-app-bar-nav-icon
-        @click.stop="drawerRight = !drawerRight"
-        v-if="$route.path === '/'"
-      ></v-app-bar-nav-icon>
+      <!--      <v-app-bar-nav-icon-->
+      <!--        @click.stop="drawerRight = !drawerRight"-->
+      <!--        v-if="$route.path === '/'"-->
+      <!--      ></v-app-bar-nav-icon>-->
     </v-app-bar>
 
     <!-- LANDING IMAGE -->
@@ -173,7 +172,7 @@
             color="#1db954"
             dark
             filled
-            placeholder="DOI search..."
+            label="DOI search..."
             append-outer-icon="fas fa-search"
             @click:append-outer="doFastSearch"
           ></v-text-field>
@@ -197,8 +196,13 @@ export default {
     otherLinks: [
       {
         icon: "fas fa-database",
-        text: "Geolocations portal",
-        url: "https://geocollections.info/"
+        text: "DataCite",
+        url: "https://datacite.org/"
+      },
+      {
+        icon: "fas fa-database",
+        text: "DataCite Estonia",
+        url: "http://datacite.ut.ee/"
       },
       {
         icon: "fas fa-sitemap",
@@ -206,7 +210,12 @@ export default {
         url: "https://natarc.ut.ee/"
       },
       {
-        icon: "fas fa-tree",
+        icon: "fas fa-globe",
+        text: "Geocollections portal",
+        url: "https://geocollections.info/"
+      },
+      {
+        icon: "fas fa-fish",
         text: "Baltic fossils",
         url: "https://fossiilid.info/"
       },
@@ -221,7 +230,12 @@ export default {
         url: "http://geoloogia.info/"
       },
       {
-        icon: "fas fa-globe",
+        icon: "fas fa-code",
+        text: "SARV API",
+        url: "https://api.geocollections.info/"
+      },
+      {
+        icon: "fas fa-atlas",
         text: "Geoloogiafond",
         url: "https://www.egt.ee/et/fond-search"
       }

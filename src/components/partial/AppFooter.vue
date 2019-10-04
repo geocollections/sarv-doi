@@ -60,6 +60,12 @@ export default {
   data: () => ({
     imageLinks: [
       {
+        image: require("../../assets/img/datacite_logo.png"),
+        url: "https://datacite.org",
+        alt: "DataCite",
+        title: "DataCite"
+      },
+      {
         image: "https://files.geocollections.info/img/natarclogovalge1.png",
         url: "https://natarc.ut.ee",
         alt: "NATARC",
@@ -95,7 +101,6 @@ export default {
 .footer {
   min-height: 8.8rem;
   font-size: 0.7rem;
-  opacity: 0.9;
   border-top: 2px solid rgba(0, 68, 148, 0.1);
   text-align: center;
   position: absolute;
@@ -109,7 +114,7 @@ export default {
 }
 .footer-logo {
   height: 50px;
-  padding: 0 10px;
+  padding: 0 8px;
 }
 
 .footer-text > a {
@@ -127,7 +132,37 @@ export default {
 
 @media (max-width: 599px) {
   .footer-logo {
-    height: 2.1rem;
+    height: 42px;
+  }
+}
+
+@media (max-width: 549px) {
+  .footer-logo {
+    height: 38px;
+  }
+}
+
+@media (max-width: 499px) {
+  .footer-logo {
+    height: 34px;
+  }
+}
+
+@media (max-width: 449px) {
+  .footer-logo {
+    height: 30px;
+  }
+}
+
+@media (max-width: 399px) {
+  .footer-logo {
+    height: 26px;
+  }
+}
+
+@media (max-width: 349px) {
+  .footer-logo {
+    height: 22px;
   }
 }
 </style>

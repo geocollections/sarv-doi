@@ -1,12 +1,11 @@
 <template>
   <v-container class="doi-detail-view" v-if="doi && doi.doi">
     <v-banner
-      ref="doiBanner"
       icon-color="#191414"
       elevation="3"
       class="text-center"
       :sticky="$vuetify.breakpoint.mdAndUp"
-      :style="$vuetify.breakpoint.mdAndUp ? 'top: 12px; z-index: 1050' : ''"
+      :style="$vuetify.breakpoint.mdAndUp ? 'top: 60px; z-index: 1050' : ''"
       icon="fas fa-book-open"
     >
       <div class="larger">
@@ -149,8 +148,33 @@
 
       <v-col cols="12" md="6">
         <v-row no-gutters>
+          <v-col cols="12" class="py-3" v-if="isDoiFromEgf">
+            <v-card class="mobile-override elevation-3">
+              <v-card-title>
+                <span>EGF landing page</span>
+                <v-spacer />
+                <v-icon color="#191414">fas fa-atlas</v-icon>
+              </v-card-title>
+
+              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">
+                <v-btn
+                  text
+                  color="#1db954"
+                  :href="egfUrl + doi.doi[0].egf"
+                  :title="egfUrl + doi.doi[0].egf"
+                  target="EgfWindow"
+                  >See DOI in EGF portal</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-col>
+
           <!-- FILES -->
-          <v-col cols="12" class="py-3" v-if="doi.doiAttachments.length > 0">
+          <v-col
+            cols="12"
+            class="py-3"
+            v-if="!isDoiFromEgf && doi.doiAttachments.length > 0"
+          >
             <v-card class="mobile-override elevation-3">
               <v-card-title>
                 <span>Files</span>
@@ -239,7 +263,11 @@
           </v-col>
 
           <!-- MAP -->
-          <v-col cols="12" class="py-3" v-if="computedGeolocations.length > 0">
+          <v-col
+            cols="12"
+            class="py-3"
+            v-if="computedGeolocations.length > 0 || computedPolygon.length > 0"
+          >
             <v-card class="elevation-3">
               <v-card-title>
                 <span>Related geolocations</span>
@@ -249,7 +277,7 @@
 
               <Map
                 :locations="computedGeolocations"
-                :polygon="testGeometry.coordinates[0]"
+                :polygon="computedPolygon"
               />
             </v-card>
           </v-col>
@@ -318,6 +346,12 @@
                         }`
                       }}</span>
                     </template>
+
+                    <template v-slot:item.polygon="{ item }">
+                      <v-icon v-if="item.polygon" color="green accent-4"
+                        >far fa-check-circle</v-icon
+                      >
+                    </template>
                   </v-data-table>
                 </div>
               </v-expand-transition>
@@ -370,18 +404,7 @@ export default {
   name: "Doi",
   components: { FilePreview, Map },
   data: () => ({
-    testGeometry: {
-      type: "Polygon",
-      coordinates: [
-        [
-          [59.41276, 27.261542],
-          [59.409472, 27.36855],
-          [59.37269, 27.364148],
-          [59.375975, 27.257254],
-          [59.41276, 27.261542]
-        ]
-      ]
-    },
+    egfUrl: "https://tarkvara.datel.ee/fond/egf/",
     showGeolocationsTable: false,
     generalDataHeaders: [
       { text: "Citation", value: "id" },
@@ -428,7 +451,7 @@ export default {
     geolocationsHeaders: [
       { text: "Named place", value: "place" },
       { text: "Point (Lat Long)", value: "point" },
-      { text: "Polygon", value: "polygon" }
+      { text: "Polygon", value: "polygon", align: "center" }
     ],
     datesHeaders: [
       { text: "Date/range", value: "date" },
@@ -453,29 +476,58 @@ export default {
 
     computedGeolocations() {
       if (this.doi.doiGeolocations && this.doi.doiGeolocations.length > 0) {
-        return this.doi.doiGeolocations.map(location => {
-          if (location.point_latitude && location.point_longitude) {
-            return {
-              lat: location.point_latitude,
-              lng: location.point_longitude,
-              id: location.locality ? location.locality : null,
-              name: location.place
-                ? location.place
-                : location.locality__locality_en
-            };
-          } else if (location.point) {
-            let point = location.point.split(" ");
-            return {
-              lat: point[0],
-              lng: point[1],
-              id: location.locality ? location.locality : null,
-              name: location.place
-                ? location.place
-                : location.locality__locality_en
-            };
-          } else return [];
-        });
+        return this.doi.doiGeolocations
+          .map(location => {
+            if (location.point_latitude && location.point_longitude) {
+              return {
+                lat: location.point_latitude,
+                lng: location.point_longitude,
+                id: location.locality ? location.locality : null,
+                name: location.place
+                  ? location.place
+                  : location.locality__locality_en
+              };
+            } else if (location.point) {
+              let point = location.point.split(" ");
+              return {
+                lat: point[0],
+                lng: point[1],
+                id: location.locality ? location.locality : null,
+                name: location.place
+                  ? location.place
+                  : location.locality__locality_en
+              };
+            } else return null;
+          })
+          .filter(item => typeof item !== "undefined" && item !== null);
       } else return [];
+    },
+
+    computedPolygon() {
+      if (this.doi.doiGeolocations && this.doi.doiGeolocations.length > 0) {
+        return this.doi.doiGeolocations
+          .map(location => {
+            if (location.polygon) {
+              return {
+                polygon: JSON.parse(location.polygon),
+                id: location.locality ? location.locality : null,
+                name: location.place
+                  ? location.place
+                  : location.locality__locality_en
+              };
+            } else return null;
+          })
+          .filter(item => typeof item !== "undefined" && item !== null);
+      } else return [];
+    },
+
+    isDoiFromEgf() {
+      return !!(
+        this.doi &&
+        this.doi.doi &&
+        this.doi.doi.length > 0 &&
+        this.doi.doi[0].egf
+      );
     }
   },
   watch: {
@@ -540,7 +592,7 @@ export default {
 
 <style scoped>
 .larger {
-  font-size: larger;
+  font-size: large;
 }
 
 .general-info-card >>> tr:hover {

@@ -58,7 +58,7 @@ export default {
   data: () => ({
     map: null,
     center: L.latLng(58.5, 25.5),
-    zoom: 11,
+    zoom: 6,
     markers: [],
     markerIcon: new L.DivIcon({
       html: "<i class='fas fa-map-marker-alt fa-3x' style='color: #1db954' />",
@@ -246,10 +246,21 @@ export default {
     },
 
     setPolygon(arrayOfPoints) {
-      let polygon = L.polygon(arrayOfPoints, { color: "#1db954" }).addTo(
-        this.map
-      );
-      this.map.fitBounds(polygon.getBounds());
+      if (arrayOfPoints && arrayOfPoints.length > 0) {
+        let listOfPolygons = [];
+        arrayOfPoints.forEach(polygon => {
+          if (polygon && polygon.polygon && polygon.polygon.length > 0) {
+            listOfPolygons.push(polygon.polygon);
+          }
+        });
+
+        if (listOfPolygons.length > 0) {
+          let polygons = L.polygon(listOfPolygons, { color: "#1db954" }).addTo(
+            this.map
+          );
+          this.map.fitBounds(polygons.getBounds());
+        }
+      }
     },
 
     getGeocollectionsUrl(params) {

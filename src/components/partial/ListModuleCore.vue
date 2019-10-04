@@ -89,10 +89,11 @@
         </template>
 
         <template v-slot:expanded-item="{ headers, item }">
-          <td :colspan="headers.length">
-            <div v-for="(entity, index) in item" :key="index">
-              {{ entity }}
-            </div>
+          <td :colspan="headers.length" class="pa-0">
+            <v-card width="100%" v-if="item.abstract" tile class="summary">
+              <v-card-title>Summary</v-card-title>
+              <v-card-text>{{ item.abstract }}</v-card-text>
+            </v-card>
           </td>
         </template>
       </v-data-table>
@@ -201,4 +202,9 @@ export default {
 .table-card >>> .no-wrap > span:after {
   content: "\00a0";
 }
+
+  .summary {
+    -webkit-box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75), inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
+    box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75), inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
+  }
 </style>
