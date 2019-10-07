@@ -53,7 +53,7 @@
         :title="getFileLink({ filename: data.attachment__uuid_filename })"
         target="FilePreviewWindow"
       >
-        <v-icon>far {{ getAttachmentIcon(data) }}</v-icon>
+        <v-icon large>far {{ getAttachmentIcon(data) }}</v-icon>
       </v-btn>
     </div>
 

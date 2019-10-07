@@ -1,29 +1,28 @@
 <template>
   <v-container class="doi-detail-view" v-if="doi && doi.doi">
     <v-banner
-      icon-color="#191414"
+      icon-color="#1db954"
       elevation="3"
-      class="text-center"
-      :sticky="$vuetify.breakpoint.mdAndUp"
+      :class="{ 'position-sticky': $vuetify.breakpoint.mdAndUp }"
       :style="$vuetify.breakpoint.mdAndUp ? 'top: 60px; z-index: 1050' : ''"
       icon="fas fa-book-open"
     >
       <div class="larger">
-        <span>{{ doi.doi[0].identifier }}: </span>
+        <span class="identifier">{{ doi.doi[0].identifier }}: </span>
         <span class="font-weight-bold">{{ doi.doi[0].title }}</span>
       </div>
 
-      <template v-slot:actions>
-        <v-btn color="#1db954" icon title="Share">
-          <v-icon>fas fa-share-alt</v-icon>
-        </v-btn>
-        <v-btn color="#1db954" icon title="Copy link">
-          <v-icon>far fa-copy</v-icon>
-        </v-btn>
-        <v-btn color="#1db954" icon title="Print">
-          <v-icon>fas fa-print</v-icon>
-        </v-btn>
-      </template>
+      <!--      <template v-slot:actions>-->
+      <!--        <v-btn color="#1db954" icon title="Share">-->
+      <!--          <v-icon>fas fa-share-alt</v-icon>-->
+      <!--        </v-btn>-->
+      <!--        <v-btn color="#1db954" icon title="Copy link">-->
+      <!--          <v-icon>far fa-copy</v-icon>-->
+      <!--        </v-btn>-->
+      <!--        <v-btn color="#1db954" icon title="Print">-->
+      <!--          <v-icon>fas fa-print</v-icon>-->
+      <!--        </v-btn>-->
+      <!--      </template>-->
     </v-banner>
 
     <v-row>
@@ -151,22 +150,63 @@
           <v-col cols="12" class="py-3" v-if="isDoiFromEgf">
             <v-card class="mobile-override elevation-3">
               <v-card-title>
-                <span>EGF landing page</span>
+                <span>EGF Files</span>
                 <v-spacer />
                 <v-icon color="#191414">fas fa-atlas</v-icon>
               </v-card-title>
+              <v-data-table
+                hide-default-footer
+                disable-sort
+                :headers="egfHeaders"
+                :items="doi.doi"
+              >
+                <template v-slot:item.id="{ item }">
+                  <v-btn
+                    icon
+                    color="#1db954"
+                    :href="egfUrl + doi.doi[0].egf"
+                    :title="egfUrl + doi.doi[0].egf"
+                    target="EgfWindow"
+                  >
+                    <v-icon color="#1db954">fas fa-paperclip</v-icon>
+                  </v-btn>
+                </template>
 
-              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">
-                <v-btn
-                  text
-                  color="#1db954"
-                  :href="egfUrl + doi.doi[0].egf"
-                  :title="egfUrl + doi.doi[0].egf"
-                  target="EgfWindow"
-                  >See DOI in EGF portal</v-btn
-                >
-              </v-card-actions>
+                <template v-slot:item.egf="{ item }">
+                  EGF:{{ item.egf }}
+                </template>
+
+                <template v-slot:item.doi="{ item }">
+                  <v-btn
+                    text
+                    class="text-none wrap-link pa-0"
+                    color="#1db954"
+                    :href="egfUrl + doi.doi[0].egf"
+                    :title="egfUrl + doi.doi[0].egf"
+                    target="EgfWindow"
+                  >
+                    {{ egfUrl + doi.doi[0].egf }}
+                  </v-btn>
+                </template>
+              </v-data-table>
             </v-card>
+            <!--            <v-card class="mobile-override elevation-3">-->
+            <!--              <v-card-title>-->
+            <!--                <span>EGF Link</span>-->
+            <!--                <v-spacer />-->
+            <!--                <v-icon color="#191414">fas fa-atlas</v-icon>-->
+            <!--              </v-card-title>-->
+
+            <!--              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">-->
+            <!--                <v-btn-->
+            <!--                  color="#1db954"-->
+            <!--                  :href="egfUrl + doi.doi[0].egf"-->
+            <!--                  :title="egfUrl + doi.doi[0].egf"-->
+            <!--                  target="EgfWindow"-->
+            <!--                  >See DOI in EGF portal</v-btn-->
+            <!--                >-->
+            <!--              </v-card-actions>-->
+            <!--            </v-card>-->
           </v-col>
 
           <!-- FILES -->
@@ -182,6 +222,7 @@
                 <v-icon color="#191414">far fa-folder-open</v-icon>
               </v-card-title>
               <v-data-table
+                hide-default-footer
                 disable-sort
                 :headers="attachmentHeaders"
                 :items="doi.doiAttachments"
@@ -433,11 +474,16 @@ export default {
       { text: "DataCite created", value: "datacite_created" },
       { text: "DataCite updated", value: "datacite_updated" }
     ],
+    egfHeaders: [
+      { text: "Link", value: "id", align: "center" },
+      { text: "EGF no.", value: "egf" },
+      { text: "EGF url", value: "doi" }
+    ],
     attachmentHeaders: [
-      { text: "Type", value: "attachment__type__value_en" },
-      { text: "Description", value: "attachment__description_en" },
+      { text: "Preview", value: "id", align: "center" },
       { text: "Formats", value: "attachment__attachment_format__value" },
-      { text: "Preview", value: "id", align: "center" }
+      // { text: "Type", value: "attachment__type__value_en" },
+      { text: "Description", value: "attachment__description_en" }
     ],
     agentHeaders: [
       { text: "Name", value: "name" },
@@ -594,7 +640,17 @@ export default {
 
 <style scoped>
 .larger {
-  font-size: large;
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+
+.larger > .identifier {
+  word-break: break-all;
+}
+
+.position-sticky {
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 .general-info-card >>> tr:hover {

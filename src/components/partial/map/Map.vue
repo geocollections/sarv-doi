@@ -241,8 +241,7 @@ export default {
         this.markers.push(marker);
       });
       let bounds = new L.featureGroup(this.markers).getBounds();
-      this.map.fitBounds(bounds);
-      this.map.setZoom(this.map.getBoundsZoom(bounds) - 2);
+      this.map.fitBounds(bounds, { maxZoom: 10 });
     },
 
     setPolygon(arrayOfPoints) {
