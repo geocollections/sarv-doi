@@ -413,6 +413,8 @@ export default {
       { text: "Resource topic", value: "resource" },
       { text: "Author(s)", value: "creators" },
       { text: "Title", value: "title" },
+      { text: "Title alternative", value: "title_alternative" },
+      { text: "Title translated", value: "title_translated" },
       { text: "Publisher", value: "publisher" },
       { text: "Year", value: "publication_year" },
       { text: "Key words", value: "subjects" },
