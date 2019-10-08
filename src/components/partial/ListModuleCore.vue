@@ -22,9 +22,10 @@
       <div>
         <v-pagination
           v-model="searchParameters.page"
+          circle
           color="#1db954"
-          prev-icon="fas fa-caret-left"
-          next-icon="fas fa-caret-right"
+          prev-icon="fas fa-angle-left"
+          next-icon="fas fa-angle-right"
           :length="Math.ceil(itemCount / searchParameters.paginateBy)"
           :total-visible="5"
         />
@@ -121,9 +122,10 @@
       <div>
         <v-pagination
           v-model="searchParameters.page"
+          circle
           color="#1db954"
-          prev-icon="fas fa-caret-left"
-          next-icon="fas fa-caret-right"
+          prev-icon="fas fa-angle-left"
+          next-icon="fas fa-angle-right"
           :length="Math.ceil(itemCount / searchParameters.paginateBy)"
           :total-visible="5"
         />
