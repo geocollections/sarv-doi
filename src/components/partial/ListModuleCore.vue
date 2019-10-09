@@ -205,8 +205,10 @@ export default {
   content: "\00a0";
 }
 
-  .summary {
-    -webkit-box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75), inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
-    box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75), inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
-  }
+.summary {
+  -webkit-box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75),
+    inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
+  box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75),
+    inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
+}
 </style>

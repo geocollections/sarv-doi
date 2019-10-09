@@ -32,4 +32,11 @@ export default {
 .v-overlay--active {
   z-index: 1075 !important;
 }
+
+/* Custom override for xl screens */
+@media (min-width: 1904px) {
+  .container {
+    max-width: 1264px !important;
+  }
+}
 </style>

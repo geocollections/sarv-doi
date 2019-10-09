@@ -96,14 +96,7 @@
     <!--    </v-navigation-drawer>-->
 
     <!-- HEADER -->
-    <v-app-bar
-      app
-      clipped-right
-      dark
-      dense
-      fixed
-      color="#1db954"
-    >
+    <v-app-bar app clipped-right dark dense fixed color="#1db954">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="pr-9 align-center">
