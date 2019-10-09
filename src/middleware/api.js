@@ -33,7 +33,7 @@ export function getDois(routeParams, searchParams) {
 }
 
 export function getDoi(id) {
-  return get(`doi/?id=${id}&format=json`);
+  return get(`doi/${id}.json`);
 }
 
 export function getDoiAttachment(id) {
