@@ -127,7 +127,9 @@ export default {
         ),
         minZoom: 6,
         maxZoom: 18
-      },
+      }
+    ],
+    overlayMaps: [
       {
         name: "Maaameti hübriidkaart",
         leafletObject: L.tileLayer(
@@ -183,8 +185,12 @@ export default {
       this.tileProviders.forEach(
         provider => (baselayers[provider.name] = provider.leafletObject)
       );
+      let overlayMaps = {};
+      this.overlayMaps.forEach(
+        provider => (overlayMaps[provider.name] = provider.leafletObject)
+      );
 
-      L.control.layers(baselayers).addTo(this.map);
+      L.control.layers(baselayers, overlayMaps).addTo(this.map);
       L.control.scale({ imperial: false }).addTo(this.map);
 
       // FULLSCREEN
@@ -210,6 +216,19 @@ export default {
           this.map.options.maxZoom = tile.maxZoom;
         }
       });
+
+      if (event.name && event.name === "Maaameti fotokaart") {
+        console.log(this.overlayMaps[0].leafletObject);
+        this.map.addLayer(this.overlayMaps[0].leafletObject);
+        document.querySelector(
+          "#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div > section > div.leaflet-control-layers-overlays > label > div > input"
+        ).checked = true;
+      } else {
+        this.map.removeLayer(this.overlayMaps[0].leafletObject);
+        document.querySelector(
+          "#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div > section > div.leaflet-control-layers-overlays > label > div > input"
+        ).checked = false;
+      }
     },
 
     setMarkers(locations) {

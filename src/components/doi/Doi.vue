@@ -417,6 +417,7 @@
         </v-row>
       </v-col>
     </v-row>
+
   </v-container>
 
   <v-container v-else class="doi-detail-error">
