@@ -3,4 +3,4 @@ module.exports = {
   productionSourceMap: false,
   // EDGE doesn't work otherwise
   transpileDependencies: ["vuetify"]
-}
+};

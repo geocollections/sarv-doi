@@ -619,7 +619,7 @@ export default {
           doi.publisher &&
           doi.identifier
         ) {
-          citation = `${doi.creators} (${doi.publication_year}): ${doi.title}. ${doi.publisher}. doi:${doi.identifier}. `;
+          citation = `${doi.creators} (${doi.publication_year}): ${doi.title}. ${doi.publisher}. https://doi.org/${doi.identifier}. `;
         }
         if (
           doi.reference__author &&
@@ -630,7 +630,7 @@ export default {
           doi.reference__pages &&
           doi.reference__doi
         ) {
-          citation += `Supplement to: ${doi.reference__author} (${doi.reference__year}): ${doi.reference__title}. ${doi.reference__journal__journal_short} ${doi.reference__volume}: ${doi.reference__pages}. doi:${doi.reference__doi}. `;
+          citation += `Supplement to: ${doi.reference__author} (${doi.reference__year}): ${doi.reference__title}. ${doi.reference__journal__journal_short} ${doi.reference__volume}: ${doi.reference__pages}. https://doi.org/${doi.reference__doi}. `;
         }
         return citation;
       }
