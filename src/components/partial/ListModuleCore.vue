@@ -84,7 +84,7 @@
           v-slot:item.datacite_created="{ item }"
         >
           <span v-if="item.datacite_created">{{
-            new Date(item.datacite_created).toDateString()
+            item.datacite_created | moment("YYYY-DD-MM")
           }}</span>
           <span v-else>{{ item.datacite_created }}</span>
         </template>

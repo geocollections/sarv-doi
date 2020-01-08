@@ -114,28 +114,28 @@
 
                 <template v-slot:item.date_added="{ item }">
                   <span v-if="item.date_added">{{
-                    new Date(item.date_added).toDateString()
+                    item.date_added | moment("YYYY-DD-MM")
                   }}</span>
                   <span v-else>{{ item.date_added }}</span>
                 </template>
 
                 <template v-slot:item.date_changed="{ item }">
                   <span v-if="item.date_changed">{{
-                    new Date(item.date_changed).toDateString()
+                    item.date_changed | moment("YYYY-DD-MM")
                   }}</span>
                   <span v-else>{{ item.date_changed }}</span>
                 </template>
 
                 <template v-slot:item.datacite_created="{ item }">
                   <span v-if="item.datacite_created">{{
-                    new Date(item.datacite_created).toDateString()
+                    item.datacite_created | moment("YYYY-DD-MM")
                   }}</span>
                   <span v-else>{{ item.datacite_created }}</span>
                 </template>
 
                 <template v-slot:item.datacite_updated="{ item }">
                   <span v-if="item.datacite_updated">{{
-                    new Date(item.datacite_updated).toDateString()
+                    item.datacite_updated | moment("YYYY-DD-MM")
                   }}</span>
                   <span v-else>{{ item.datacite_updated }}</span>
                 </template>
@@ -417,7 +417,6 @@
         </v-row>
       </v-col>
     </v-row>
-
   </v-container>
 
   <v-container v-else class="doi-detail-error">

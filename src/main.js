@@ -9,6 +9,7 @@ import "leaflet/dist/leaflet.css";
 Vue.config.productionTip = false;
 
 Vue.use(animated);
+Vue.use(require("vue-moment"));
 
 new Vue({
   router,
