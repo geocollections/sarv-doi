@@ -8,7 +8,7 @@
       dark
       disable-resize-watcher
       temporary
-      color="#1db954"
+      color="brown"
     >
       <v-list dense>
         <v-subheader>ROUTES</v-subheader>
@@ -50,54 +50,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- DRAWER RIGHT -->
-    <!--    <v-navigation-drawer-->
-    <!--      :value="drawerRight"-->
-    <!--      v-if="$route.path === '/'"-->
-    <!--      app-->
-    <!--      clipped-->
-    <!--      color="#1db954"-->
-    <!--      dark-->
-    <!--      expand-on-hover-->
-    <!--      right-->
-    <!--      @input="changeDrawerRightState"-->
-    <!--    >-->
-    <!--      &lt;!&ndash; SEARCH &ndash;&gt;-->
-    <!--      <v-list dense>-->
-    <!--        <v-list-group color="#191414" prepend-icon="fas fa-search" value="true">-->
-    <!--          <template v-slot:activator>-->
-    <!--            <v-list-item-content>-->
-    <!--              <v-list-item-title>Search</v-list-item-title>-->
-    <!--            </v-list-item-content>-->
-    <!--          </template>-->
-
-    <!--          <v-list-item>-->
-    <!--            <v-list-item-content>-->
-    <!--              Regular search-->
-    <!--            </v-list-item-content>-->
-    <!--          </v-list-item>-->
-    <!--        </v-list-group>-->
-    <!--      </v-list>-->
-
-    <!--      &lt;!&ndash; ADVANCED SEARCH &ndash;&gt;-->
-    <!--      <v-list dense>-->
-    <!--        <v-list-group color="#191414" prepend-icon="fas fa-search-plus">-->
-    <!--          <template v-slot:activator>-->
-    <!--            <v-list-item-title>Advanced search</v-list-item-title>-->
-    <!--          </template>-->
-
-    <!--          <v-list-item>-->
-    <!--            <v-list-item-content>-->
-    <!--              Advanced searvh-->
-    <!--            </v-list-item-content>-->
-    <!--          </v-list-item>-->
-    <!--        </v-list-group>-->
-    <!--      </v-list>-->
-    <!--    </v-navigation-drawer>-->
-
     <!-- HEADER -->
-    <v-app-bar app clipped-right dark dense fixed color="#1db954">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-app-bar app clipped-right dark dense fixed color="brown">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
       <v-toolbar-title class="pr-9 align-center">
         <span class="font-weight-bold">SARV·DOI</span>
@@ -120,7 +75,7 @@
             </v-btn>
           </template>
 
-          <v-list color="#1db954" dark dense>
+          <v-list color="brown" dark dense>
             <v-list-item
               v-for="item in otherLinks"
               :key="item.text"
@@ -128,7 +83,7 @@
               target="OtherLinkWindow"
             >
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <v-icon v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-title>{{ item.text }}</v-list-item-title>
             </v-list-item>
@@ -143,15 +98,18 @@
     </v-app-bar>
 
     <!-- LANDING IMAGE -->
-    <div
-      class="fullscreen-landing-image"
-      :style="{ height: $vuetify.breakpoint.smAndDown ? '45vh' : '35vh' }"
-    >
+    <div class="fullscreen-landing-image">
       <div class="d-flex flex-column justify-center" style="height: 100%">
         <div
           class="text-center font-weight-bold page-header animated fadeIn faster"
         >
-          SARV·DOI
+          <router-link
+            :to="{ path: '/' }"
+            class="white--text"
+            title="Go to home"
+          >
+            SARV·DOI
+          </router-link>
         </div>
         <div class="text-center page-subheader py-2 animated fadeIn faster">
           Geoscience Data Repository
@@ -159,16 +117,14 @@
         <div class="mx-auto">
           <v-text-field
             v-model.trim="fastSearch"
+            hide-details
             autofocus
             clear-icon="fas fa-times"
             clearable
-            color="#1db954"
-            dark
-            filled
+            color="brown"
+            solo
             label="DOI search..."
-            append-outer-icon="fas fa-search"
-            @click:append-outer="doFastSearch"
-          ></v-text-field>
+          />
         </div>
       </div>
     </div>
@@ -259,24 +215,21 @@ export default {
           }
         } else this.$router.push({ path: "/", query: { q: this.fastSearch } });
       } else if (this.$route.path === "/" && this.$route.query.q) this.$router.push({ path: "/" });
-    }, 500),
-
-    changeDrawerRightState(drawerState) {
-      this.drawerRight = drawerState;
-    }
+    }, 500)
   }
 };
 </script>
 
 <style scoped>
 #app-header {
-  color: #191414 !important;
+  color: #000000 !important;
   z-index: 1100; /* This z-index must be above other z-indexes, for example leaflet has 1000 max */
 }
 
 .fullscreen-landing-image {
   z-index: 15 !important;
-  min-height: 225px;
+  height: 30vh;
+  min-height: 160px;
   margin-top: 48px;
   background: linear-gradient(
       to bottom,
@@ -288,16 +241,24 @@ export default {
 }
 
 .page-header {
-  font-size: 3.5rem;
+  font-size: 3rem;
   color: #ffffff;
-  text-shadow: 2px 2px 4px #191414;
+  text-shadow: 2px 2px 4px #000000;
   line-height: 90%;
 }
 
+.page-header > a {
+  text-decoration: none;
+}
+
+.page-header > a:hover {
+  opacity: 0.8;
+}
+
 .page-subheader {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #ffffff;
-  text-shadow: 2px 2px 4px #191414;
+  text-shadow: 2px 2px 4px #000000;
   font-weight: 600;
   line-height: 90%;
 }

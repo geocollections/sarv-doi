@@ -8,7 +8,7 @@
       <div>
         <v-select
           v-model="searchParameters.paginateBy"
-          color="#1db954"
+          color="brown"
           dense
           :items="paginateByOptions"
           item-color="green"
@@ -23,7 +23,7 @@
         <v-pagination
           v-model="searchParameters.page"
           circle
-          color="#1db954"
+          color="brown"
           prev-icon="fas fa-angle-left"
           next-icon="fas fa-angle-right"
           :length="Math.ceil(itemCount / searchParameters.paginateBy)"
@@ -35,8 +35,8 @@
     <!-- DATA TABLE -->
     <v-card class="table-card my-1">
       <v-card-title>
-        <v-icon class="mr-2" color="#191414" large>fas fa-list</v-icon>
-        <v-badge color="#1db954">
+        <v-icon class="mr-2" color="black" large>fas fa-list</v-icon>
+        <v-badge color="brown">
           <span id="table-title" class="text-uppercase">{{ module }}</span>
           <template v-slot:badge>
             <span class="font-weight-bold">{{ itemCount }}</span>
@@ -49,7 +49,7 @@
           label="Filter records"
           clear-icon="fas fa-times"
           clearable
-          color="#1db954"
+          color="brown"
         ></v-text-field>
       </v-card-title>
 
@@ -67,13 +67,13 @@
         expand-icon="fas fa-caret-down"
       >
         <template v-slot:progress>
-          <v-progress-linear indeterminate color="#1db954"></v-progress-linear>
+          <v-progress-linear indeterminate color="brown"></v-progress-linear>
         </template>
 
         <template v-if="module === 'doi'" v-slot:item.identifier="{ item }">
           <v-btn
             :to="{ path: '/10.15152/GEO.' + item.id }"
-            color="#1db954"
+            color="brown"
             text
             >{{ item.identifier }}</v-btn
           >
@@ -108,7 +108,7 @@
       <div>
         <v-select
           v-model="searchParameters.paginateBy"
-          color="#1db954"
+          color="brown"
           dense
           :items="paginateByOptions"
           item-color="green"
@@ -123,7 +123,7 @@
         <v-pagination
           v-model="searchParameters.page"
           circle
-          color="#1db954"
+          color="brown"
           prev-icon="fas fa-angle-left"
           next-icon="fas fa-angle-right"
           :length="Math.ceil(itemCount / searchParameters.paginateBy)"
@@ -193,8 +193,8 @@ export default {
 }
 
 .table-card >>> .v-input--is-focused .fa-times {
-  color: #191414 !important;
-  caret-color: #191414 !important;
+  color: #000000 !important;
+  caret-color: #000000 !important;
 }
 
 .table-card >>> .no-wrap {

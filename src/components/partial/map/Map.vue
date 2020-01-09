@@ -5,7 +5,7 @@
       <v-btn
         text
         class="text-none"
-        color="#1db954"
+        color="brown"
         :href="
           `https://www.google.com/maps/?q=${locations[0].lat},${locations[0].lng}`
         "
@@ -19,7 +19,7 @@
       <v-btn
         text
         class="text-none"
-        color="#1db954"
+        color="brown"
         :href="
           `https://xgis.maaamet.ee/xgis2/page/app/geoloogia400k?punkt=${geoToLest(
             locations[0].lat,
@@ -61,7 +61,7 @@ export default {
     zoom: 6,
     markers: [],
     markerIcon: new L.DivIcon({
-      html: "<i class='fas fa-map-marker-alt fa-3x' style='color: #1db954' />",
+      html: "<i class='fas fa-map-marker-alt fa-3x' style='color: #795548' />",
       iconSize: [29, 37],
       iconAnchor: [12, 36],
       popupAnchor: [2, -34],
@@ -273,7 +273,7 @@ export default {
         });
 
         if (listOfPolygons.length > 0) {
-          let polygons = L.polygon(listOfPolygons, { color: "#1db954" }).addTo(
+          let polygons = L.polygon(listOfPolygons, { color: "#795548" }).addTo(
             this.map
           );
           this.map.fitBounds(polygons.getBounds());
@@ -344,14 +344,14 @@ export default {
 }
 
 #map >>> .leaflet-control-zoom > a {
-  color: #1db954;
+  color: #795548;
 }
 
 #map >>> .leaflet-control-zoom > a:hover {
-  color: #191414;
+  color: #000000;
 }
 
 #map >>> .leaflet-control-attribution > a {
-  color: #1db954;
+  color: #795548;
 }
 </style>

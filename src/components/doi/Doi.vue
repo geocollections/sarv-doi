@@ -1,422 +1,420 @@
 <template>
   <v-container class="doi-detail-view" v-if="doi && doi.doi">
-    <v-banner
-      icon-color="#1db954"
-      elevation="3"
-      :class="{ 'position-sticky': $vuetify.breakpoint.mdAndUp }"
-      :style="$vuetify.breakpoint.mdAndUp ? 'top: 60px; z-index: 1050' : ''"
-      icon="fas fa-book-open"
-    >
-      <div class="larger">
-        <span class="identifier">{{ doi.doi[0].identifier }}: </span>
-        <span class="font-weight-bold">{{ doi.doi[0].title }}</span>
-      </div>
+    <v-card class="pa-1">
+      <v-banner icon-color="black" icon="fas fa-book-open" style="border-bottom: 3px solid rgba(0, 0, 0, 0.12);">
+        <div class="banner-text">
+          <span class="identifier">{{ doi.doi[0].identifier }}: </span>
+          <span class="font-weight-bold">{{ doi.doi[0].title }}</span>
+        </div>
 
-      <!--      <template v-slot:actions>-->
-      <!--        <v-btn color="#1db954" icon title="Share">-->
-      <!--          <v-icon>fas fa-share-alt</v-icon>-->
-      <!--        </v-btn>-->
-      <!--        <v-btn color="#1db954" icon title="Copy link">-->
-      <!--          <v-icon>far fa-copy</v-icon>-->
-      <!--        </v-btn>-->
-      <!--        <v-btn color="#1db954" icon title="Print">-->
-      <!--          <v-icon>fas fa-print</v-icon>-->
-      <!--        </v-btn>-->
-      <!--      </template>-->
-    </v-banner>
+        <!--      <template v-slot:actions>-->
+        <!--        <v-btn color="brown" icon title="Share">-->
+        <!--          <v-icon>fas fa-share-alt</v-icon>-->
+        <!--        </v-btn>-->
+        <!--        <v-btn color="brown" icon title="Copy link">-->
+        <!--          <v-icon>far fa-copy</v-icon>-->
+        <!--        </v-btn>-->
+        <!--        <v-btn color="brown" icon title="Print">-->
+        <!--          <v-icon>fas fa-print</v-icon>-->
+        <!--        </v-btn>-->
+        <!--      </template>-->
+      </v-banner>
 
-    <v-row>
-      <v-col cols="12" md="6">
-        <v-row no-gutters>
-          <!-- GENERAL INFO -->
-          <v-col cols="12 pt-3">
-            <v-card class="general-info-card elevation-3">
-              <v-card-title>
-                <span>General info</span>
-                <v-spacer />
-                <v-icon color="#191414">fas fa-list</v-icon>
-              </v-card-title>
-              <v-data-table
-                :mobile-breakpoint="9000"
-                disable-sort
-                disable-filtering
-                disable-pagination
-                hide-default-header
-                hide-default-footer
-                :headers="computedGeneralDataHeaders"
-                :items="doi.doi"
-              >
-                <template v-slot:item.id="{ item }">
-                  <span>{{ getCitation(item) }}</span>
-                </template>
-
-                <template v-slot:item.licence__licence_en="{ item }">
-                  <v-btn
-                    class="pa-0"
-                    height="unset"
-                    min-width="unset"
-                    text
-                    color="#1db954"
-                    :href="item.licence__licence_url_en"
-                    :title="item.licence__licence_url_en"
-                    target="LicenceWindow"
-                    >{{ item.licence__licence_en }}</v-btn
-                  >
-                </template>
-
-                <template v-slot:item.dataset="{ item }">
-                  <v-btn
-                    class="text-none wrap-link pa-0"
-                    height="unset"
-                    min-width="unset"
-                    text
-                    color="#1db954"
-                    :href="
-                      getGeocollectionsUrl({
-                        object: 'dataset',
-                        id: item.dataset
-                      })
-                    "
-                    :title="
-                      getGeocollectionsUrl({
-                        object: 'dataset',
-                        id: item.dataset
-                      })
-                    "
-                    target="GeocollectionsWindow"
-                    >{{ item.dataset__name_en }}</v-btn
-                  >
-                </template>
-
-                <template v-slot:item.reference="{ item }">
-                  <v-btn
-                    class="text-none wrap-link pa-0"
-                    height="unset"
-                    min-width="unset"
-                    text
-                    color="#1db954"
-                    :href="
-                      getGeocollectionsUrl({
-                        object: 'reference',
-                        id: item.reference
-                      })
-                    "
-                    :title="
-                      getGeocollectionsUrl({
-                        object: 'reference',
-                        id: item.reference
-                      })
-                    "
-                    target="GeocollectionsWindow"
-                    >{{ item.reference__reference }}</v-btn
-                  >
-                </template>
-
-                <template v-slot:item.date_added="{ item }">
-                  <span v-if="item.date_added">{{
-                    item.date_added | moment("YYYY-DD-MM")
-                  }}</span>
-                  <span v-else>{{ item.date_added }}</span>
-                </template>
-
-                <template v-slot:item.date_changed="{ item }">
-                  <span v-if="item.date_changed">{{
-                    item.date_changed | moment("YYYY-DD-MM")
-                  }}</span>
-                  <span v-else>{{ item.date_changed }}</span>
-                </template>
-
-                <template v-slot:item.datacite_created="{ item }">
-                  <span v-if="item.datacite_created">{{
-                    item.datacite_created | moment("YYYY-DD-MM")
-                  }}</span>
-                  <span v-else>{{ item.datacite_created }}</span>
-                </template>
-
-                <template v-slot:item.datacite_updated="{ item }">
-                  <span v-if="item.datacite_updated">{{
-                    item.datacite_updated | moment("YYYY-DD-MM")
-                  }}</span>
-                  <span v-else>{{ item.datacite_updated }}</span>
-                </template>
-              </v-data-table>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-col>
-
-      <v-col cols="12" md="6">
-        <v-row no-gutters>
-          <v-col cols="12" class="py-3" v-if="isDoiFromEgf">
-            <v-card class="mobile-override elevation-3">
-              <v-card-title>
-                <span>EGF Files</span>
-                <v-spacer />
-                <v-icon color="#191414">fas fa-atlas</v-icon>
-              </v-card-title>
-              <v-data-table
-                hide-default-footer
-                disable-sort
-                :headers="egfHeaders"
-                :items="doi.doi"
-              >
-                <template v-slot:item.id="{ item }">
-                  <v-btn
-                    icon
-                    color="#1db954"
-                    :href="egfUrl + doi.doi[0].egf"
-                    :title="egfUrl + doi.doi[0].egf"
-                    target="EgfWindow"
-                  >
-                    <v-icon color="#1db954">fas fa-paperclip</v-icon>
-                  </v-btn>
-                </template>
-
-                <template v-slot:item.egf="{ item }">
-                  EGF:{{ item.egf }}
-                </template>
-
-                <template v-slot:item.doi="{ item }">
-                  <v-btn
-                    text
-                    class="text-none wrap-link pa-0"
-                    color="#1db954"
-                    :href="egfUrl + doi.doi[0].egf"
-                    :title="egfUrl + doi.doi[0].egf"
-                    target="EgfWindow"
-                  >
-                    {{ egfUrl + doi.doi[0].egf }}
-                  </v-btn>
-                </template>
-              </v-data-table>
-            </v-card>
-            <!--            <v-card class="mobile-override elevation-3">-->
-            <!--              <v-card-title>-->
-            <!--                <span>EGF Link</span>-->
-            <!--                <v-spacer />-->
-            <!--                <v-icon color="#191414">fas fa-atlas</v-icon>-->
-            <!--              </v-card-title>-->
-
-            <!--              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">-->
-            <!--                <v-btn-->
-            <!--                  color="#1db954"-->
-            <!--                  :href="egfUrl + doi.doi[0].egf"-->
-            <!--                  :title="egfUrl + doi.doi[0].egf"-->
-            <!--                  target="EgfWindow"-->
-            <!--                  >See DOI in EGF portal</v-btn-->
-            <!--                >-->
-            <!--              </v-card-actions>-->
-            <!--            </v-card>-->
-          </v-col>
-
-          <!-- FILES -->
-          <v-col
-            cols="12"
-            class="py-3"
-            v-if="!isDoiFromEgf && doi.doiAttachments.length > 0"
-          >
-            <v-card class="mobile-override elevation-3">
-              <v-card-title>
-                <span>Files</span>
-                <v-spacer />
-                <v-icon color="#191414">far fa-folder-open</v-icon>
-              </v-card-title>
-              <v-data-table
-                hide-default-footer
-                disable-sort
-                :headers="attachmentHeaders"
-                :items="doi.doiAttachments"
-              >
-                <template v-slot:item.id="{ item }">
-                  <file-preview :data="item" />
-                </template>
-              </v-data-table>
-            </v-card>
-          </v-col>
-
-          <!-- RELATED PERSONS AND INSTITUTIONS -->
-          <v-col cols="12" class="py-3" v-if="doi.doiAgents.length > 0">
-            <v-card class="mobile-override elevation-3">
-              <v-card-title>
-                <span>Related persons and institutions</span>
-                <v-spacer />
-                <v-icon color="#191414">fas fa-users</v-icon>
-              </v-card-title>
-              <v-data-table
-                disable-sort
-                :headers="agentHeaders"
-                :items="doi.doiAgents"
-              >
-                <template v-slot:item.name="{ item }">
-                  <v-btn
-                    v-if="item.orcid"
-                    class="text-none wrap-link pa-0"
-                    height="unset"
-                    min-width="unset"
-                    text
-                    color="#1db954"
-                    :href="getOrcidUrl(item.orcid)"
-                    :title="getOrcidUrl(item.orcid)"
-                    target="OrcidWindow"
-                  >
-                    {{ item.name }}
-                  </v-btn>
-                  <span v-else>{{ item.name }}</span>
-                </template>
-              </v-data-table>
-            </v-card>
-          </v-col>
-
-          <!-- RELATED IDENTIFIERS -->
-          <v-col
-            cols="12"
-            class="py-3"
-            v-if="doi.doiRelatedIdentifiers.length > 0"
-          >
-            <v-card class="mobile-override elevation-3">
-              <v-card-title>
-                <span>Related identifiers</span>
-                <v-spacer />
-                <v-icon color="#191414">fas fa-project-diagram</v-icon>
-              </v-card-title>
-              <v-data-table
-                disable-sort
-                :headers="relatedIdentifiersHeaders"
-                :items="doi.doiRelatedIdentifiers"
-              >
-                <template v-slot:item.value="{ item }">
-                  <span style="word-break: break-all">{{ item.value }}</span>
-                </template>
-
-                <template v-slot:item.id="{ item }">
-                  <v-btn
-                    icon
-                    color="#1db954"
-                    :href="getDoiUrl({ doi: item.value })"
-                    :title="getDoiUrl({ doi: item.value })"
-                    target="DoiWindow"
-                  >
-                    <v-icon>fas fa-link</v-icon>
-                  </v-btn>
-                </template>
-              </v-data-table>
-            </v-card>
-          </v-col>
-
-          <!-- MAP -->
-          <v-col
-            cols="12"
-            class="py-3"
-            v-if="computedGeolocations.length > 0 || computedPolygon.length > 0"
-          >
-            <v-card class="elevation-3">
-              <v-card-title>
-                <span>Related geolocations</span>
-                <v-spacer />
-                <v-icon color="#191414">far fa-map</v-icon>
-              </v-card-title>
-
-              <Map
-                :locations="computedGeolocations"
-                :polygon="computedPolygon"
-              />
-            </v-card>
-          </v-col>
-
-          <!-- RELATED GEOLOCATIONS -->
-          <v-col cols="12" class="py-3" v-if="doi.doiGeolocations.length > 0">
-            <v-card class="mobile-override elevation-3">
-              <v-card-title>
-                <span>Related geolocations (table)</span>
-                <v-spacer />
-                <v-btn
-                  icon
-                  color="#1db954"
-                  @click="showGeolocationsTable = !showGeolocationsTable"
+      <v-row>
+        <v-col cols="12" md="6">
+          <v-row no-gutters>
+            <!-- GENERAL INFO -->
+            <v-col cols="12 pt-3">
+              <v-card flat class="general-info-card">
+                <v-card-title>
+                  <span>General info</span>
+                  <v-spacer />
+                  <v-icon color="black">fas fa-list</v-icon>
+                </v-card-title>
+                <v-data-table
+                  :mobile-breakpoint="9000"
+                  disable-sort
+                  disable-filtering
+                  disable-pagination
+                  hide-default-header
+                  hide-default-footer
+                  :headers="computedGeneralDataHeaders"
+                  :items="doi.doi"
                 >
-                  <v-icon>{{
-                    showGeolocationsTable
-                      ? "fas fa-chevron-up"
-                      : "fas fa-chevron-down"
-                  }}</v-icon>
-                </v-btn>
-              </v-card-title>
-              <v-expand-transition>
-                <div v-show="showGeolocationsTable">
-                  <v-data-table
-                    disable-sort
-                    :headers="geolocationsHeaders"
-                    :items="doi.doiGeolocations"
+                  <template v-slot:item.id="{ item }">
+                    <span>{{ getCitation(item) }}</span>
+                  </template>
+
+                  <template v-slot:item.licence__licence_en="{ item }">
+                    <v-btn
+                      class="pa-0"
+                      height="unset"
+                      min-width="unset"
+                      text
+                      color="brown"
+                      :href="item.licence__licence_url_en"
+                      :title="item.licence__licence_url_en"
+                      target="LicenceWindow"
+                      >{{ item.licence__licence_en }}</v-btn
+                    >
+                  </template>
+
+                  <template v-slot:item.dataset="{ item }">
+                    <v-btn
+                      class="text-none wrap-link pa-0"
+                      height="unset"
+                      min-width="unset"
+                      text
+                      color="brown"
+                      :href="
+                        getGeocollectionsUrl({
+                          object: 'dataset',
+                          id: item.dataset
+                        })
+                      "
+                      :title="
+                        getGeocollectionsUrl({
+                          object: 'dataset',
+                          id: item.dataset
+                        })
+                      "
+                      target="GeocollectionsWindow"
+                      >{{ item.dataset__name_en }}</v-btn
+                    >
+                  </template>
+
+                  <template v-slot:item.reference="{ item }">
+                    <v-btn
+                      class="text-none wrap-link pa-0"
+                      height="unset"
+                      min-width="unset"
+                      text
+                      color="brown"
+                      :href="
+                        getGeocollectionsUrl({
+                          object: 'reference',
+                          id: item.reference
+                        })
+                      "
+                      :title="
+                        getGeocollectionsUrl({
+                          object: 'reference',
+                          id: item.reference
+                        })
+                      "
+                      target="GeocollectionsWindow"
+                      >{{ item.reference__reference }}</v-btn
+                    >
+                  </template>
+
+                  <template v-slot:item.date_added="{ item }">
+                    <span v-if="item.date_added">{{
+                      item.date_added | moment("YYYY-DD-MM")
+                    }}</span>
+                    <span v-else>{{ item.date_added }}</span>
+                  </template>
+
+                  <template v-slot:item.date_changed="{ item }">
+                    <span v-if="item.date_changed">{{
+                      item.date_changed | moment("YYYY-DD-MM")
+                    }}</span>
+                    <span v-else>{{ item.date_changed }}</span>
+                  </template>
+
+                  <template v-slot:item.datacite_created="{ item }">
+                    <span v-if="item.datacite_created">{{
+                      item.datacite_created | moment("YYYY-DD-MM")
+                    }}</span>
+                    <span v-else>{{ item.datacite_created }}</span>
+                  </template>
+
+                  <template v-slot:item.datacite_updated="{ item }">
+                    <span v-if="item.datacite_updated">{{
+                      item.datacite_updated | moment("YYYY-DD-MM")
+                    }}</span>
+                    <span v-else>{{ item.datacite_updated }}</span>
+                  </template>
+                </v-data-table>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-row no-gutters>
+            <v-col cols="12" class="py-3" v-if="isDoiFromEgf">
+              <v-card flat class="mobile-override">
+                <v-card-title>
+                  <span>EGF Files</span>
+                  <v-spacer />
+                  <v-icon color="black">fas fa-atlas</v-icon>
+                </v-card-title>
+                <v-data-table
+                  hide-default-footer
+                  disable-sort
+                  :headers="egfHeaders"
+                  :items="doi.doi"
+                >
+                  <template v-slot:item.id="{ item }">
+                    <v-btn
+                      icon
+                      color="brown"
+                      :href="egfUrl + doi.doi[0].egf"
+                      :title="egfUrl + doi.doi[0].egf"
+                      target="EgfWindow"
+                    >
+                      <v-icon color="brown">fas fa-paperclip</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <template v-slot:item.egf="{ item }">
+                    EGF:{{ item.egf }}
+                  </template>
+
+                  <template v-slot:item.doi="{ item }">
+                    <v-btn
+                      text
+                      class="text-none wrap-link pa-0"
+                      color="brown"
+                      :href="egfUrl + doi.doi[0].egf"
+                      :title="egfUrl + doi.doi[0].egf"
+                      target="EgfWindow"
+                    >
+                      {{ egfUrl + doi.doi[0].egf }}
+                    </v-btn>
+                  </template>
+                </v-data-table>
+              </v-card>
+              <!--            <v-card class="mobile-override elevation-3">-->
+              <!--              <v-card-title>-->
+              <!--                <span>EGF Link</span>-->
+              <!--                <v-spacer />-->
+              <!--                <v-icon color="black">fas fa-atlas</v-icon>-->
+              <!--              </v-card-title>-->
+
+              <!--              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">-->
+              <!--                <v-btn-->
+              <!--                  color="brown"-->
+              <!--                  :href="egfUrl + doi.doi[0].egf"-->
+              <!--                  :title="egfUrl + doi.doi[0].egf"-->
+              <!--                  target="EgfWindow"-->
+              <!--                  >See DOI in EGF portal</v-btn-->
+              <!--                >-->
+              <!--              </v-card-actions>-->
+              <!--            </v-card>-->
+            </v-col>
+
+            <!-- FILES -->
+            <v-col
+              cols="12"
+              class="py-3"
+              v-if="!isDoiFromEgf && doi.doiAttachments.length > 0"
+            >
+              <v-card flat class="mobile-override">
+                <v-card-title>
+                  <span>Files</span>
+                  <v-spacer />
+                  <v-icon color="black">far fa-folder-open</v-icon>
+                </v-card-title>
+                <v-data-table
+                  hide-default-footer
+                  disable-sort
+                  :headers="attachmentHeaders"
+                  :items="doi.doiAttachments"
+                >
+                  <template v-slot:item.id="{ item }">
+                    <file-preview :data="item" />
+                  </template>
+                </v-data-table>
+              </v-card>
+            </v-col>
+
+            <!-- RELATED PERSONS AND INSTITUTIONS -->
+            <v-col cols="12" class="py-3" v-if="doi.doiAgents.length > 0">
+              <v-card flat class="mobile-override">
+                <v-card-title>
+                  <span>Related persons and institutions</span>
+                  <v-spacer />
+                  <v-icon color="black">fas fa-users</v-icon>
+                </v-card-title>
+                <v-data-table
+                  disable-sort
+                  :headers="agentHeaders"
+                  :items="doi.doiAgents"
+                >
+                  <template v-slot:item.name="{ item }">
+                    <v-btn
+                      v-if="item.orcid"
+                      class="text-none wrap-link pa-0"
+                      height="unset"
+                      min-width="unset"
+                      text
+                      color="brown"
+                      :href="getOrcidUrl(item.orcid)"
+                      :title="getOrcidUrl(item.orcid)"
+                      target="OrcidWindow"
+                    >
+                      {{ item.name }}
+                    </v-btn>
+                    <span v-else>{{ item.name }}</span>
+                  </template>
+                </v-data-table>
+              </v-card>
+            </v-col>
+
+            <!-- RELATED IDENTIFIERS -->
+            <v-col
+              cols="12"
+              class="py-3"
+              v-if="doi.doiRelatedIdentifiers.length > 0"
+            >
+              <v-card flat class="mobile-override">
+                <v-card-title>
+                  <span>Related identifiers</span>
+                  <v-spacer />
+                  <v-icon color="black">fas fa-project-diagram</v-icon>
+                </v-card-title>
+                <v-data-table
+                  disable-sort
+                  :headers="relatedIdentifiersHeaders"
+                  :items="doi.doiRelatedIdentifiers"
+                >
+                  <template v-slot:item.value="{ item }">
+                    <span style="word-break: break-all">{{ item.value }}</span>
+                  </template>
+
+                  <template v-slot:item.id="{ item }">
+                    <v-btn
+                      icon
+                      color="brown"
+                      :href="getDoiUrl({ doi: item.value })"
+                      :title="getDoiUrl({ doi: item.value })"
+                      target="DoiWindow"
+                    >
+                      <v-icon>fas fa-link</v-icon>
+                    </v-btn>
+                  </template>
+                </v-data-table>
+              </v-card>
+            </v-col>
+
+            <!-- MAP -->
+            <v-col
+              cols="12"
+              class="py-3"
+              v-if="
+                computedGeolocations.length > 0 || computedPolygon.length > 0
+              "
+            >
+              <v-card flat>
+                <v-card-title>
+                  <span>Related geolocations</span>
+                  <v-spacer />
+                  <v-icon color="black">far fa-map</v-icon>
+                </v-card-title>
+
+                <Map
+                  :locations="computedGeolocations"
+                  :polygon="computedPolygon"
+                />
+              </v-card>
+            </v-col>
+
+            <!-- RELATED GEOLOCATIONS -->
+            <v-col cols="12" class="py-3" v-if="doi.doiGeolocations.length > 0">
+              <v-card flat class="mobile-override">
+                <v-card-title>
+                  <span>Related geolocations (table)</span>
+                  <v-spacer />
+                  <v-btn
+                    icon
+                    color="brown"
+                    @click="showGeolocationsTable = !showGeolocationsTable"
                   >
-                    <template v-slot:item.place="{ item }">
-                      <v-btn
-                        v-if="item.locality"
-                        class="text-none wrap-link pa-0"
-                        height="unset"
-                        min-width="unset"
-                        text
-                        color="#1db954"
-                        :href="
-                          getGeocollectionsUrl({
-                            object: 'locality',
-                            id: item.locality
-                          })
-                        "
-                        :title="
-                          getGeocollectionsUrl({
-                            object: 'locality',
-                            id: item.locality
-                          })
-                        "
-                        target="GeocollectionsWindow"
-                        >{{ item.locality__locality_en }}</v-btn
-                      >
-                      <span v-else>{{ item.place }}</span>
-                    </template>
+                    <v-icon>{{
+                      showGeolocationsTable
+                        ? "fas fa-chevron-up"
+                        : "fas fa-chevron-down"
+                    }}</v-icon>
+                  </v-btn>
+                </v-card-title>
+                <v-expand-transition>
+                  <div v-show="showGeolocationsTable">
+                    <v-data-table
+                      disable-sort
+                      :headers="geolocationsHeaders"
+                      :items="doi.doiGeolocations"
+                    >
+                      <template v-slot:item.place="{ item }">
+                        <v-btn
+                          v-if="item.locality"
+                          class="text-none wrap-link pa-0"
+                          height="unset"
+                          min-width="unset"
+                          text
+                          color="brown"
+                          :href="
+                            getGeocollectionsUrl({
+                              object: 'locality',
+                              id: item.locality
+                            })
+                          "
+                          :title="
+                            getGeocollectionsUrl({
+                              object: 'locality',
+                              id: item.locality
+                            })
+                          "
+                          target="GeocollectionsWindow"
+                          >{{ item.locality__locality_en }}</v-btn
+                        >
+                        <span v-else>{{ item.place }}</span>
+                      </template>
 
-                    <template v-slot:item.point="{ item }">
-                      <span
-                        v-if="item.point_latitude && item.point_longitude"
-                        >{{
-                          `${item.point_latitude} ${item.point_longitude}`
-                        }}</span
-                      >
-                      <span v-else-if="item.point">{{
-                        `${item.point.split(" ")[0]} ${
-                          item.point.split(" ")[1]
-                        }`
-                      }}</span>
-                    </template>
+                      <template v-slot:item.point="{ item }">
+                        <span
+                          v-if="item.point_latitude && item.point_longitude"
+                          >{{
+                            `${item.point_latitude} ${item.point_longitude}`
+                          }}</span
+                        >
+                        <span v-else-if="item.point">{{
+                          `${item.point.split(" ")[0]} ${
+                            item.point.split(" ")[1]
+                          }`
+                        }}</span>
+                      </template>
 
-                    <template v-slot:item.polygon="{ item }">
-                      <v-icon v-if="item.polygon" color="green accent-4"
-                        >far fa-check-circle</v-icon
-                      >
-                    </template>
-                  </v-data-table>
-                </div>
-              </v-expand-transition>
-            </v-card>
-          </v-col>
+                      <template v-slot:item.polygon="{ item }">
+                        <v-icon v-if="item.polygon" color="green accent-4"
+                          >far fa-check-circle</v-icon
+                        >
+                      </template>
+                    </v-data-table>
+                  </div>
+                </v-expand-transition>
+              </v-card>
+            </v-col>
 
-          <!-- LINKED DATES -->
-          <v-col cols="12" class="pt-3" v-if="doi.doiDates.length > 0">
-            <v-card class="mobile-override elevation-3">
-              <v-card-title>
-                <span>Linked dates</span>
-                <v-spacer />
-                <v-icon color="#191414">far fa-calendar-alt</v-icon>
-              </v-card-title>
-              <v-data-table
-                disable-sort
-                :headers="datesHeaders"
-                :items="doi.doiDates"
-              ></v-data-table>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+            <!-- LINKED DATES -->
+            <v-col cols="12" class="pt-3" v-if="doi.doiDates.length > 0">
+              <v-card flat class="mobile-override">
+                <v-card-title>
+                  <span>Linked dates</span>
+                  <v-spacer />
+                  <v-icon color="black">far fa-calendar-alt</v-icon>
+                </v-card-title>
+                <v-data-table
+                  disable-sort
+                  :headers="datesHeaders"
+                  :items="doi.doiDates"
+                ></v-data-table>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-card>
   </v-container>
 
   <v-container v-else class="doi-detail-error">
@@ -639,12 +637,12 @@ export default {
 </script>
 
 <style scoped>
-.larger {
-  font-size: 1.75rem;
+.banner-text {
+  font-size: 2rem;
   line-height: 1.1;
 }
 
-.larger > .identifier {
+.banner-text > .identifier {
   word-break: break-all;
 }
 
