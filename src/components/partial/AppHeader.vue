@@ -24,6 +24,7 @@
             light
             label="DOI search..."
             class="align-center mx-4 app-bar-text-field"
+            autocomplete="off"
         />
         <v-subheader>ROUTES</v-subheader>
         <v-list-item
@@ -91,6 +92,7 @@
             light
             label="DOI search..."
             class="align-center mx-4 app-bar-text-field"
+            autocomplete="off"
         />
         <v-menu v-model="showOtherLinkDropdown" offset-y z-index="1101">
           <template v-slot:activator="{ on }">
@@ -151,6 +153,7 @@
                 color="cyan darken-2"
                 solo
                 label="DOI search..."
+                autocomplete="off"
               />
             </v-col>
           </v-row>

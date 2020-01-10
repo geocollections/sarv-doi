@@ -50,6 +50,7 @@
           clear-icon="fas fa-times"
           clearable
           color="cyan darken-2"
+          autocomplete="off"
         ></v-text-field>
       </v-card-title>
 
