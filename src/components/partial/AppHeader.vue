@@ -16,7 +16,6 @@
             v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
             v-model.trim="fastSearch"
             hide-details
-            autofocus
             clear-icon="fas fa-times"
             clearable
             color="cyan darken-2"
@@ -84,7 +83,6 @@
             v-if="$route.name !== 'dois'"
             v-model.trim="fastSearch"
             hide-details
-            autofocus
             clear-icon="fas fa-times"
             clearable
             color="cyan darken-2"
@@ -147,7 +145,6 @@
               <v-text-field
                 v-model.trim="fastSearch"
                 hide-details
-                autofocus
                 clear-icon="fas fa-times"
                 clearable
                 color="cyan darken-2"
