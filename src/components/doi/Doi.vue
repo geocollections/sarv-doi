@@ -2,7 +2,7 @@
   <v-container class="doi-detail-view" v-if="doi && doi.doi">
     <v-card class="pa-1">
       <v-banner
-        icon-color="black"
+        icon-color="cyan darken-2"
         icon="fas fa-book-open"
         style="border-bottom: 3px solid rgba(0, 0, 0, 0.12);"
       >
@@ -12,13 +12,13 @@
         </div>
 
         <!--      <template v-slot:actions>-->
-        <!--        <v-btn color="brown" icon title="Share">-->
+        <!--        <v-btn color="red darken-2" icon title="Share">-->
         <!--          <v-icon>fas fa-share-alt</v-icon>-->
         <!--        </v-btn>-->
-        <!--        <v-btn color="brown" icon title="Copy link">-->
+        <!--        <v-btn color="red darken-2" icon title="Copy link">-->
         <!--          <v-icon>far fa-copy</v-icon>-->
         <!--        </v-btn>-->
-        <!--        <v-btn color="brown" icon title="Print">-->
+        <!--        <v-btn color="red darken-2" icon title="Print">-->
         <!--          <v-icon>fas fa-print</v-icon>-->
         <!--        </v-btn>-->
         <!--      </template>-->
@@ -30,10 +30,10 @@
             <!-- GENERAL INFO -->
             <v-col cols="12 pt-3">
               <v-card flat class="general-info-card">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>General info</span>
                   <v-spacer />
-                  <v-icon color="black">fas fa-list</v-icon>
+                  <v-icon color="cyan darken-2">fas fa-list</v-icon>
                 </v-card-title>
                 <v-data-table
                   :mobile-breakpoint="9000"
@@ -55,7 +55,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="brown"
+                      color="red darken-2"
                       :href="item.licence__licence_url_en"
                       :title="item.licence__licence_url_en"
                       target="LicenceWindow"
@@ -69,7 +69,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="brown"
+                      color="red darken-2"
                       :href="
                         getGeocollectionsUrl({
                           object: 'dataset',
@@ -93,7 +93,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="brown"
+                      color="red darken-2"
                       :href="
                         getGeocollectionsUrl({
                           object: 'reference',
@@ -148,10 +148,10 @@
           <v-row no-gutters>
             <v-col cols="12" class="py-3" v-if="isDoiFromEgf">
               <v-card flat class="mobile-override">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>EGF Files</span>
                   <v-spacer />
-                  <v-icon color="black">fas fa-atlas</v-icon>
+                  <v-icon color="cyan darken-2">fas fa-atlas</v-icon>
                 </v-card-title>
                 <v-data-table
                   hide-default-footer
@@ -162,12 +162,12 @@
                   <template v-slot:item.id="{ item }">
                     <v-btn
                       icon
-                      color="brown"
+                      color="red darken-2"
                       :href="egfUrl + doi.doi[0].egf"
                       :title="egfUrl + doi.doi[0].egf"
                       target="EgfWindow"
                     >
-                      <v-icon color="brown">fas fa-paperclip</v-icon>
+                      <v-icon color="red darken-2">fas fa-paperclip</v-icon>
                     </v-btn>
                   </template>
 
@@ -179,7 +179,7 @@
                     <v-btn
                       text
                       class="text-none wrap-link pa-0"
-                      color="brown"
+                      color="red darken-2"
                       :href="egfUrl + doi.doi[0].egf"
                       :title="egfUrl + doi.doi[0].egf"
                       target="EgfWindow"
@@ -190,15 +190,15 @@
                 </v-data-table>
               </v-card>
               <!--            <v-card class="mobile-override elevation-3">-->
-              <!--              <v-card-title>-->
+              <!--              <v-card-title class="cyan--text darken-2 colored-border mb-2">-->
               <!--                <span>EGF Link</span>-->
               <!--                <v-spacer />-->
-              <!--                <v-icon color="black">fas fa-atlas</v-icon>-->
+              <!--                <v-icon color="cyan darken-2">fas fa-atlas</v-icon>-->
               <!--              </v-card-title>-->
 
               <!--              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">-->
               <!--                <v-btn-->
-              <!--                  color="brown"-->
+              <!--                  color="cyan darken-2"-->
               <!--                  :href="egfUrl + doi.doi[0].egf"-->
               <!--                  :title="egfUrl + doi.doi[0].egf"-->
               <!--                  target="EgfWindow"-->
@@ -215,10 +215,10 @@
               v-if="!isDoiFromEgf && doi.doiAttachments.length > 0"
             >
               <v-card flat class="mobile-override">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>Files</span>
                   <v-spacer />
-                  <v-icon color="black">far fa-folder-open</v-icon>
+                  <v-icon color="cyan darken-2">far fa-folder-open</v-icon>
                 </v-card-title>
                 <v-data-table
                   hide-default-footer
@@ -236,10 +236,10 @@
             <!-- RELATED PERSONS AND INSTITUTIONS -->
             <v-col cols="12" class="py-3" v-if="doi.doiAgents.length > 0">
               <v-card flat class="mobile-override">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>Related persons and institutions</span>
                   <v-spacer />
-                  <v-icon color="black">fas fa-users</v-icon>
+                  <v-icon color="cyan darken-2">fas fa-users</v-icon>
                 </v-card-title>
                 <v-data-table
                   disable-sort
@@ -253,7 +253,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="brown"
+                      color="red darken-2"
                       :href="getOrcidUrl(item.orcid)"
                       :title="getOrcidUrl(item.orcid)"
                       target="OrcidWindow"
@@ -273,10 +273,10 @@
               v-if="doi.doiRelatedIdentifiers.length > 0"
             >
               <v-card flat class="mobile-override">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>Related identifiers</span>
                   <v-spacer />
-                  <v-icon color="black">fas fa-project-diagram</v-icon>
+                  <v-icon color="cyan darken-2">fas fa-project-diagram</v-icon>
                 </v-card-title>
                 <v-data-table
                   disable-sort
@@ -290,7 +290,7 @@
                   <template v-slot:item.id="{ item }">
                     <v-btn
                       icon
-                      color="brown"
+                      color="red darken-2"
                       :href="getDoiUrl({ doi: item.value })"
                       :title="getDoiUrl({ doi: item.value })"
                       target="DoiWindow"
@@ -311,10 +311,10 @@
               "
             >
               <v-card flat>
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>Related geolocations</span>
                   <v-spacer />
-                  <v-icon color="black">far fa-map</v-icon>
+                  <v-icon color="cyan darken-2">far fa-map</v-icon>
                 </v-card-title>
 
                 <Map
@@ -327,12 +327,12 @@
             <!-- RELATED GEOLOCATIONS -->
             <v-col cols="12" class="py-3" v-if="doi.doiGeolocations.length > 0">
               <v-card flat class="mobile-override">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>Related geolocations (table)</span>
                   <v-spacer />
                   <v-btn
                     icon
-                    color="brown"
+                    color="red darken-2"
                     @click="showGeolocationsTable = !showGeolocationsTable"
                   >
                     <v-icon>{{
@@ -356,7 +356,7 @@
                           height="unset"
                           min-width="unset"
                           text
-                          color="brown"
+                          color="red darken-2"
                           :href="
                             getGeocollectionsUrl({
                               object: 'locality',
@@ -390,7 +390,7 @@
                       </template>
 
                       <template v-slot:item.polygon="{ item }">
-                        <v-icon v-if="item.polygon" color="green accent-4"
+                        <v-icon v-if="item.polygon" color="red darken-2"
                           >far fa-check-circle</v-icon
                         >
                       </template>
@@ -403,10 +403,10 @@
             <!-- LINKED DATES -->
             <v-col cols="12" class="pt-3" v-if="doi.doiDates.length > 0">
               <v-card flat class="mobile-override">
-                <v-card-title>
+                <v-card-title class="cyan--text darken-2 colored-border mb-2">
                   <span>Linked dates</span>
                   <v-spacer />
-                  <v-icon color="black">far fa-calendar-alt</v-icon>
+                  <v-icon color="cyan darken-2">far fa-calendar-alt</v-icon>
                 </v-card-title>
                 <v-data-table
                   disable-sort
@@ -425,7 +425,7 @@
     <v-alert
       v-if="!doi.loadingState"
       border="right"
-      color="red"
+      color="red darken-2"
       elevation="3"
       icon="fas fa-exclamation-circle"
       prominent
@@ -641,6 +641,11 @@ export default {
 </script>
 
 <style scoped>
+.doi-detail-view,
+.doi-detail-error {
+  margin-top: 48px;
+}
+
 .banner-text {
   font-size: 2rem;
   line-height: 1.1;
@@ -650,9 +655,8 @@ export default {
   word-break: break-all;
 }
 
-.position-sticky {
-  position: -webkit-sticky;
-  position: sticky;
+.colored-border {
+  border-bottom: 1px solid #0097a7;
 }
 
 .general-info-card >>> tr:hover {

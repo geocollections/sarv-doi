@@ -8,9 +8,23 @@
       dark
       disable-resize-watcher
       temporary
-      color="brown"
+      color="cyan darken-2"
     >
       <v-list dense>
+        <v-subheader v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly">SEARCH</v-subheader>
+        <v-text-field
+            v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
+            v-model.trim="fastSearch"
+            hide-details
+            autofocus
+            clear-icon="fas fa-times"
+            clearable
+            color="cyan darken-2"
+            solo
+            light
+            label="DOI search..."
+            class="align-center mx-4 app-bar-text-field"
+        />
         <v-subheader>ROUTES</v-subheader>
         <v-list-item
           v-for="item in routes"
@@ -51,20 +65,33 @@
     </v-navigation-drawer>
 
     <!-- HEADER -->
-    <v-app-bar app clipped-right dark dense fixed color="brown">
+    <v-app-bar app clipped-right dark dense fixed color="cyan darken-2">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
       <v-toolbar-title class="pr-9 align-center">
         <span class="font-weight-bold">SARV·DOI</span>
       </v-toolbar-title>
 
-      <v-toolbar-items class="d-none d-sm-block">
+      <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
         <v-btn text title="Home" to="/">Home</v-btn>
       </v-toolbar-items>
 
       <div class="flex-grow-1"></div>
 
-      <v-toolbar-items class="d-none d-sm-block">
+      <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
+        <v-text-field
+            v-if="$route.name !== 'dois'"
+            v-model.trim="fastSearch"
+            hide-details
+            autofocus
+            clear-icon="fas fa-times"
+            clearable
+            color="cyan darken-2"
+            solo
+            light
+            label="DOI search..."
+            class="align-center mx-4 app-bar-text-field"
+        />
         <v-menu v-model="showOtherLinkDropdown" offset-y z-index="1101">
           <template v-slot:activator="{ on }">
             <v-btn text v-on="on">
@@ -75,7 +102,7 @@
             </v-btn>
           </template>
 
-          <v-list color="brown" dark dense>
+          <v-list color="cyan darken-2" dark dense>
             <v-list-item
               v-for="item in otherLinks"
               :key="item.text"
@@ -98,36 +125,38 @@
     </v-app-bar>
 
     <!-- LANDING IMAGE -->
-    <div class="fullscreen-landing-image">
-      <div class="d-flex flex-column justify-center" style="height: 100%">
-        <div
-          class="text-center font-weight-bold page-header animated fadeIn faster"
-        >
-          <router-link
-            :to="{ path: '/' }"
-            class="white--text"
-            title="Go to home"
-          >
+    <v-parallax
+        v-if="$route.name === 'dois'"
+      class="landing-image"
+      src="https://files.geocollections.info/img/doi/header.jpg"
+      style="height: 30vh;"
+    >
+      <v-row align="center" justify="center">
+        <v-col class="text-center" cols="12">
+          <h1 class="mb-1 font-weight-bold page-header animated fadeIn faster">
             SARV·DOI
-          </router-link>
-        </div>
-        <div class="text-center page-subheader py-2 animated fadeIn faster">
-          Geoscience Data Repository
-        </div>
-        <div class="mx-auto">
-          <v-text-field
-            v-model.trim="fastSearch"
-            hide-details
-            autofocus
-            clear-icon="fas fa-times"
-            clearable
-            color="brown"
-            solo
-            label="DOI search..."
-          />
-        </div>
-      </div>
-    </div>
+          </h1>
+          <h4 class="text-center page-subheader py-2 animated fadeIn faster">
+            Geoscience Data Repository
+          </h4>
+
+          <v-row align="center" justify="center">
+            <v-col cols="12" class="pa-0" style="max-width: 250px">
+              <v-text-field
+                v-model.trim="fastSearch"
+                hide-details
+                autofocus
+                clear-icon="fas fa-times"
+                clearable
+                color="cyan darken-2"
+                solo
+                label="DOI search..."
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-parallax>
   </div>
 </template>
 
@@ -226,18 +255,9 @@ export default {
   z-index: 1100; /* This z-index must be above other z-indexes, for example leaflet has 1000 max */
 }
 
-.fullscreen-landing-image {
-  z-index: 15 !important;
-  height: 30vh;
-  min-height: 160px;
+.landing-image {
   margin-top: 48px;
-  background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0.2) 0%,
-      rgba(44, 53, 49, 0.7) 100%
-    ),
-    url("https://files.geocollections.info/img/doi/header.jpg");
-  background-size: cover;
+  min-height: 160px;
 }
 
 .page-header {
@@ -247,19 +267,15 @@ export default {
   line-height: 90%;
 }
 
-.page-header > a {
-  text-decoration: none;
-}
-
-.page-header > a:hover {
-  opacity: 0.8;
-}
-
 .page-subheader {
   font-size: 1.5rem;
   color: #ffffff;
   text-shadow: 2px 2px 4px #000000;
   font-weight: 600;
   line-height: 90%;
+}
+
+.app-bar-text-field >>> .v-input__control {
+  min-height: 38px !important;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-footer
     class="footer justify-center flex-column pt-1 px-3 pb-2"
-    color="brown"
+    color="cyan darken-2"
     dark
   >
     <div class="footer-logos my-2">

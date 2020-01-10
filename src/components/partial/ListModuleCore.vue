@@ -8,7 +8,7 @@
       <div>
         <v-select
           v-model="searchParameters.paginateBy"
-          color="brown"
+          color="cyan darken-2"
           dense
           :items="paginateByOptions"
           item-color="green"
@@ -23,7 +23,7 @@
         <v-pagination
           v-model="searchParameters.page"
           circle
-          color="brown"
+          color="cyan darken-2"
           prev-icon="fas fa-angle-left"
           next-icon="fas fa-angle-right"
           :length="Math.ceil(itemCount / searchParameters.paginateBy)"
@@ -35,8 +35,8 @@
     <!-- DATA TABLE -->
     <v-card class="table-card my-1">
       <v-card-title>
-        <v-icon class="mr-2" color="black" large>fas fa-list</v-icon>
-        <v-badge color="brown">
+        <v-icon class="mr-2" color="cyan darken-2" large>fas fa-list</v-icon>
+        <v-badge color="cyan darken-2">
           <span id="table-title" class="text-uppercase">{{ module }}</span>
           <template v-slot:badge>
             <span class="font-weight-bold">{{ itemCount }}</span>
@@ -49,7 +49,7 @@
           label="Filter records"
           clear-icon="fas fa-times"
           clearable
-          color="brown"
+          color="cyan darken-2"
         ></v-text-field>
       </v-card-title>
 
@@ -69,16 +69,30 @@
         @click:row="tableRowClick"
       >
         <template v-slot:progress>
-          <v-progress-linear indeterminate color="brown"></v-progress-linear>
+          <v-progress-linear
+            indeterminate
+            color="cyan darken-2"
+          ></v-progress-linear>
         </template>
 
         <!-- Todo: find a solution where both row click work and expanded click work -->
-<!--        <template v-slot:item.data-table-expand="{ expand, isExpanded }">-->
-<!--          <div @click="expand(!isExpanded)">-->
-<!--            <v-icon v-if="isExpanded">fas fa-sort-up</v-icon>-->
-<!--            <v-icon v-else>fas fa-sort-down</v-icon>-->
-<!--          </div>-->
-<!--        </template>-->
+        <template v-slot:item.data-table-expand="{ expand, isExpanded, item }">
+          <div
+            v-if="
+              typeof item.abstract !== 'undefined' &&
+                item.abstract !== null &&
+                item.abstract.length > 0
+            "
+            class="expanded-link py-2 px-3 text-center"
+            @click.stop="expand(!isExpanded)"
+            title="View summary"
+          >
+            <v-icon v-if="isExpanded" color="red darken-2"
+              >fas fa-caret-up</v-icon
+            >
+            <v-icon v-else color="red darken-2">fas fa-caret-down</v-icon>
+          </div>
+        </template>
 
         <template v-if="module === 'doi'" v-slot:item.identifier="{ item }">
           <div class="font-weight-bold">{{ item.identifier }}</div>
@@ -113,7 +127,7 @@
       <div>
         <v-select
           v-model="searchParameters.paginateBy"
-          color="brown"
+          color="cyan darken-2"
           dense
           :items="paginateByOptions"
           item-color="green"
@@ -128,7 +142,7 @@
         <v-pagination
           v-model="searchParameters.page"
           circle
-          color="brown"
+          color="cyan darken-2"
           prev-icon="fas fa-angle-left"
           next-icon="fas fa-angle-right"
           :length="Math.ceil(itemCount / searchParameters.paginateBy)"
@@ -230,6 +244,18 @@ export default {
 
 .list-module-core-table >>> tbody tr:hover {
   cursor: pointer;
-  background-color: #efebe9 !important;
+  background-color: #e0f7fa !important;
+}
+
+.list-module-core-table >>> tbody > .v-data-table__expanded__content:hover {
+  cursor: unset;
+}
+
+.list-module-core-table >>> tbody > tr > td:first-child {
+  padding: 0;
+}
+
+.expanded-link:hover {
+  opacity: 0.5;
 }
 </style>
