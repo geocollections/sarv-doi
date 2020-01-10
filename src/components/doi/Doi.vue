@@ -1,7 +1,11 @@
 <template>
   <v-container class="doi-detail-view" v-if="doi && doi.doi">
     <v-card class="pa-1">
-      <v-banner icon-color="black" icon="fas fa-book-open" style="border-bottom: 3px solid rgba(0, 0, 0, 0.12);">
+      <v-banner
+        icon-color="black"
+        icon="fas fa-book-open"
+        style="border-bottom: 3px solid rgba(0, 0, 0, 0.12);"
+      >
         <div class="banner-text">
           <span class="identifier">{{ doi.doi[0].identifier }}: </span>
           <span class="font-weight-bold">{{ doi.doi[0].title }}</span>

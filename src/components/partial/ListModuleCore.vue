@@ -54,6 +54,7 @@
       </v-card-title>
 
       <v-data-table
+        class="list-module-core-table"
         :headers="headers"
         hide-default-footer
         :items="items"
@@ -65,18 +66,22 @@
         show-expand
         :expanded.sync="expanded"
         expand-icon="fas fa-caret-down"
+        @click:row="tableRowClick"
       >
         <template v-slot:progress>
           <v-progress-linear indeterminate color="brown"></v-progress-linear>
         </template>
 
+        <!-- Todo: find a solution where both row click work and expanded click work -->
+<!--        <template v-slot:item.data-table-expand="{ expand, isExpanded }">-->
+<!--          <div @click="expand(!isExpanded)">-->
+<!--            <v-icon v-if="isExpanded">fas fa-sort-up</v-icon>-->
+<!--            <v-icon v-else>fas fa-sort-down</v-icon>-->
+<!--          </div>-->
+<!--        </template>-->
+
         <template v-if="module === 'doi'" v-slot:item.identifier="{ item }">
-          <v-btn
-            :to="{ path: '/10.15152/GEO.' + item.id }"
-            color="brown"
-            text
-            >{{ item.identifier }}</v-btn
-          >
+          <div class="font-weight-bold">{{ item.identifier }}</div>
         </template>
 
         <template
@@ -183,6 +188,17 @@ export default {
       },
       deep: true
     }
+  },
+  methods: {
+    tableRowClick(rowData) {
+      if (
+        typeof rowData !== "undefined" &&
+        rowData !== null &&
+        rowData.id !== null
+      ) {
+        this.$router.push({ path: "/10.15152/GEO." + rowData.id });
+      }
+    }
   }
 };
 </script>
@@ -210,5 +226,10 @@ export default {
     inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
   box-shadow: inset 0px 4px 8px -5px rgba(50, 50, 50, 0.75),
     inset 0px -4px 8px -5px rgba(50, 50, 50, 0.75);
+}
+
+.list-module-core-table >>> tbody tr:hover {
+  cursor: pointer;
+  background-color: #efebe9 !important;
 }
 </style>
