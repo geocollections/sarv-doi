@@ -113,28 +113,28 @@
 
                   <template v-slot:item.date_added="{ item }">
                     <span v-if="item.date_added">{{
-                      item.date_added | moment("YYYY-DD-MM")
+                      item.date_added | moment("YYYY-MM-DD")
                     }}</span>
                     <span v-else>{{ item.date_added }}</span>
                   </template>
 
                   <template v-slot:item.date_changed="{ item }">
                     <span v-if="item.date_changed">{{
-                      item.date_changed | moment("YYYY-DD-MM")
+                      item.date_changed | moment("YYYY-MM-DD")
                     }}</span>
                     <span v-else>{{ item.date_changed }}</span>
                   </template>
 
                   <template v-slot:item.datacite_created="{ item }">
                     <span v-if="item.datacite_created">{{
-                      item.datacite_created | moment("YYYY-DD-MM")
+                      item.datacite_created | moment("YYYY-MM-DD")
                     }}</span>
                     <span v-else>{{ item.datacite_created }}</span>
                   </template>
 
                   <template v-slot:item.datacite_updated="{ item }">
                     <span v-if="item.datacite_updated">{{
-                      item.datacite_updated | moment("YYYY-DD-MM")
+                      item.datacite_updated | moment("YYYY-MM-DD")
                     }}</span>
                     <span v-else>{{ item.datacite_updated }}</span>
                   </template>
