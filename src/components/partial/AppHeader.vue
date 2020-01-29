@@ -68,7 +68,7 @@
 
     <!-- HEADER -->
     <v-app-bar app clipped-right dark dense fixed color="cyan darken-2">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" aria-label="Open navigation drawer" />
 
       <v-toolbar-title class="pr-9 align-center">
         <router-link
@@ -158,6 +158,7 @@
                 solo
                 label="DOI search..."
                 autocomplete="off"
+                aria-label="DOI search field"
               />
             </v-col>
           </v-row>
