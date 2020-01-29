@@ -11,19 +11,21 @@
       color="cyan darken-2"
     >
       <v-list dense>
-        <v-subheader v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly">SEARCH</v-subheader>
+        <v-subheader v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
+          >SEARCH</v-subheader
+        >
         <v-text-field
-            v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
-            v-model.trim="fastSearch"
-            hide-details
-            clear-icon="fas fa-times"
-            clearable
-            color="cyan darken-2"
-            solo
-            light
-            label="DOI search..."
-            class="align-center mx-4 app-bar-text-field"
-            autocomplete="off"
+          v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
+          v-model.trim="fastSearch"
+          hide-details
+          clear-icon="fas fa-times"
+          clearable
+          color="cyan darken-2"
+          solo
+          light
+          label="DOI search..."
+          class="align-center mx-4 app-bar-text-field"
+          autocomplete="off"
         />
         <v-subheader>ROUTES</v-subheader>
         <v-list-item
@@ -69,7 +71,12 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
       <v-toolbar-title class="pr-9 align-center">
-        <span class="font-weight-bold">SARV·DOI</span>
+        <router-link
+          title="Home"
+          to="/"
+          class="font-weight-bold toolbar-title white--text"
+          >SARV·DOI</router-link
+        >
       </v-toolbar-title>
 
       <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
@@ -80,17 +87,17 @@
 
       <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
         <v-text-field
-            v-if="$route.name !== 'dois'"
-            v-model.trim="fastSearch"
-            hide-details
-            clear-icon="fas fa-times"
-            clearable
-            color="cyan darken-2"
-            solo
-            light
-            label="DOI search..."
-            class="align-center mx-4 app-bar-text-field"
-            autocomplete="off"
+          v-if="$route.name !== 'dois'"
+          v-model.trim="fastSearch"
+          hide-details
+          clear-icon="fas fa-times"
+          clearable
+          color="cyan darken-2"
+          solo
+          light
+          label="DOI search..."
+          class="align-center mx-4 app-bar-text-field"
+          autocomplete="off"
         />
         <v-menu v-model="showOtherLinkDropdown" offset-y z-index="1101">
           <template v-slot:activator="{ on }">
@@ -126,7 +133,7 @@
 
     <!-- LANDING IMAGE -->
     <v-parallax
-        v-if="$route.name === 'dois'"
+      v-if="$route.name === 'dois'"
       class="landing-image"
       src="https://files.geocollections.info/img/doi/header.jpg"
       style="height: 30vh;"
@@ -277,5 +284,14 @@ export default {
 
 .app-bar-text-field >>> .v-input__control {
   min-height: 38px !important;
+}
+
+.toolbar-title {
+  text-decoration: unset;
+}
+
+.toolbar-title:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 </style>

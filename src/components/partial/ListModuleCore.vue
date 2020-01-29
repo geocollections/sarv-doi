@@ -51,7 +51,7 @@
           clearable
           color="cyan darken-2"
           autocomplete="off"
-        ></v-text-field>
+        />
       </v-card-title>
 
       <v-data-table
@@ -70,10 +70,7 @@
         @click:row="tableRowClick"
       >
         <template v-slot:progress>
-          <v-progress-linear
-            indeterminate
-            color="cyan darken-2"
-          ></v-progress-linear>
+          <v-progress-linear indeterminate color="cyan darken-2" />
         </template>
 
         <!-- Todo: find a solution where both row click work and expanded click work -->
@@ -88,10 +85,10 @@
             @click.stop="expand(!isExpanded)"
             title="View summary"
           >
-            <v-icon v-if="isExpanded" color="red darken-2"
+            <v-icon v-if="isExpanded" color="amber darken-1"
               >fas fa-caret-up</v-icon
             >
-            <v-icon v-else color="red darken-2">fas fa-caret-down</v-icon>
+            <v-icon v-else color="amber darken-1">fas fa-caret-down</v-icon>
           </div>
         </template>
 

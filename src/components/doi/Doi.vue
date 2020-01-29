@@ -12,13 +12,13 @@
         </div>
 
         <!--      <template v-slot:actions>-->
-        <!--        <v-btn color="red darken-2" icon title="Share">-->
+        <!--        <v-btn color="amber darken-1" icon title="Share">-->
         <!--          <v-icon>fas fa-share-alt</v-icon>-->
         <!--        </v-btn>-->
-        <!--        <v-btn color="red darken-2" icon title="Copy link">-->
+        <!--        <v-btn color="amber darken-1" icon title="Copy link">-->
         <!--          <v-icon>far fa-copy</v-icon>-->
         <!--        </v-btn>-->
-        <!--        <v-btn color="red darken-2" icon title="Print">-->
+        <!--        <v-btn color="amber darken-1" icon title="Print">-->
         <!--          <v-icon>fas fa-print</v-icon>-->
         <!--        </v-btn>-->
         <!--      </template>-->
@@ -51,11 +51,11 @@
 
                   <template v-slot:item.licence__licence_en="{ item }">
                     <v-btn
-                      class="pa-0"
+                      class="pa-0 font-weight-bold"
                       height="unset"
                       min-width="unset"
                       text
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="item.licence__licence_url_en"
                       :title="item.licence__licence_url_en"
                       target="LicenceWindow"
@@ -65,11 +65,11 @@
 
                   <template v-slot:item.dataset="{ item }">
                     <v-btn
-                      class="text-none wrap-link pa-0"
+                      class="text-none wrap-link pa-0 font-weight-bold"
                       height="unset"
                       min-width="unset"
                       text
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="
                         getGeocollectionsUrl({
                           object: 'dataset',
@@ -89,11 +89,11 @@
 
                   <template v-slot:item.reference="{ item }">
                     <v-btn
-                      class="text-none wrap-link pa-0"
+                      class="text-none wrap-link pa-0 font-weight-bold"
                       height="unset"
                       min-width="unset"
                       text
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="
                         getGeocollectionsUrl({
                           object: 'reference',
@@ -162,12 +162,12 @@
                   <template v-slot:item.id="{ item }">
                     <v-btn
                       icon
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="egfUrl + doi.doi[0].egf"
                       :title="egfUrl + doi.doi[0].egf"
                       target="EgfWindow"
                     >
-                      <v-icon color="red darken-2">fas fa-paperclip</v-icon>
+                      <v-icon color="amber darken-1">fas fa-paperclip</v-icon>
                     </v-btn>
                   </template>
 
@@ -179,7 +179,7 @@
                     <v-btn
                       text
                       class="text-none wrap-link pa-0"
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="egfUrl + doi.doi[0].egf"
                       :title="egfUrl + doi.doi[0].egf"
                       target="EgfWindow"
@@ -253,7 +253,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="getOrcidUrl(item.orcid)"
                       :title="getOrcidUrl(item.orcid)"
                       target="OrcidWindow"
@@ -290,7 +290,7 @@
                   <template v-slot:item.id="{ item }">
                     <v-btn
                       icon
-                      color="red darken-2"
+                      color="amber darken-1"
                       :href="getDoiUrl({ doi: item.value })"
                       :title="getDoiUrl({ doi: item.value })"
                       target="DoiWindow"
@@ -332,7 +332,7 @@
                   <v-spacer />
                   <v-btn
                     icon
-                    color="red darken-2"
+                    color="amber darken-1"
                     @click="showGeolocationsTable = !showGeolocationsTable"
                   >
                     <v-icon>{{
@@ -352,11 +352,11 @@
                       <template v-slot:item.place="{ item }">
                         <v-btn
                           v-if="item.locality"
-                          class="text-none wrap-link pa-0"
+                          class="text-none wrap-link pa-0 font-weight-bold"
                           height="unset"
                           min-width="unset"
                           text
-                          color="red darken-2"
+                          color="amber darken-1"
                           :href="
                             getGeocollectionsUrl({
                               object: 'locality',
@@ -390,7 +390,7 @@
                       </template>
 
                       <template v-slot:item.polygon="{ item }">
-                        <v-icon v-if="item.polygon" color="red darken-2"
+                        <v-icon v-if="item.polygon" color="amber darken-1"
                           >far fa-check-circle</v-icon
                         >
                       </template>
@@ -412,7 +412,7 @@
                   disable-sort
                   :headers="datesHeaders"
                   :items="doi.doiDates"
-                ></v-data-table>
+                />
               </v-card>
             </v-col>
           </v-row>
@@ -425,7 +425,7 @@
     <v-alert
       v-if="!doi.loadingState"
       border="right"
-      color="red darken-2"
+      color="amber darken-1"
       elevation="3"
       icon="fas fa-exclamation-circle"
       prominent
