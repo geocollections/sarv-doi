@@ -85,10 +85,10 @@
             @click.stop="expand(!isExpanded)"
             title="View summary"
           >
-            <v-icon v-if="isExpanded" color="amber darken-1"
+            <v-icon v-if="isExpanded" color="red darken-2 darken-1"
               >fas fa-caret-up</v-icon
             >
-            <v-icon v-else color="amber darken-1">fas fa-caret-down</v-icon>
+            <v-icon v-else color="red darken-2 darken-1">fas fa-caret-down</v-icon>
           </div>
         </template>
 

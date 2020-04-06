@@ -12,13 +12,13 @@
         </div>
 
         <!--      <template v-slot:actions>-->
-        <!--        <v-btn color="amber darken-1" icon title="Share">-->
+        <!--        <v-btn color="red darken-2 darken-1" icon title="Share">-->
         <!--          <v-icon>fas fa-share-alt</v-icon>-->
         <!--        </v-btn>-->
-        <!--        <v-btn color="amber darken-1" icon title="Copy link">-->
+        <!--        <v-btn color="red darken-2 darken-1" icon title="Copy link">-->
         <!--          <v-icon>far fa-copy</v-icon>-->
         <!--        </v-btn>-->
-        <!--        <v-btn color="amber darken-1" icon title="Print">-->
+        <!--        <v-btn color="red darken-2 darken-1" icon title="Print">-->
         <!--          <v-icon>fas fa-print</v-icon>-->
         <!--        </v-btn>-->
         <!--      </template>-->
@@ -55,7 +55,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="item.licence__licence_url_en"
                       :title="item.licence__licence_url_en"
                       target="LicenceWindow"
@@ -69,7 +69,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="
                         getGeocollectionsUrl({
                           object: 'dataset',
@@ -93,7 +93,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="
                         getGeocollectionsUrl({
                           object: 'reference',
@@ -162,12 +162,12 @@
                   <template v-slot:item.id="{ item }">
                     <v-btn
                       icon
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="egfUrl + doi.doi[0].egf"
                       :title="egfUrl + doi.doi[0].egf"
                       target="EgfWindow"
                     >
-                      <v-icon color="amber darken-1">fas fa-paperclip</v-icon>
+                      <v-icon color="red darken-2 darken-1">fas fa-paperclip</v-icon>
                     </v-btn>
                   </template>
 
@@ -179,7 +179,7 @@
                     <v-btn
                       text
                       class="text-none wrap-link pa-0"
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="egfUrl + doi.doi[0].egf"
                       :title="egfUrl + doi.doi[0].egf"
                       target="EgfWindow"
@@ -253,7 +253,7 @@
                       height="unset"
                       min-width="unset"
                       text
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="getOrcidUrl(item.orcid)"
                       :title="getOrcidUrl(item.orcid)"
                       target="OrcidWindow"
@@ -290,7 +290,7 @@
                   <template v-slot:item.id="{ item }">
                     <v-btn
                       icon
-                      color="amber darken-1"
+                      color="red darken-2 darken-1"
                       :href="getDoiUrl({ doi: item.value })"
                       :title="getDoiUrl({ doi: item.value })"
                       target="DoiWindow"
@@ -332,7 +332,7 @@
                   <v-spacer />
                   <v-btn
                     icon
-                    color="amber darken-1"
+                    color="red darken-2 darken-1"
                     @click="showGeolocationsTable = !showGeolocationsTable"
                   >
                     <v-icon>{{
@@ -356,7 +356,7 @@
                           height="unset"
                           min-width="unset"
                           text
-                          color="amber darken-1"
+                          color="red darken-2 darken-1"
                           :href="
                             getGeocollectionsUrl({
                               object: 'locality',
@@ -390,7 +390,7 @@
                       </template>
 
                       <template v-slot:item.polygon="{ item }">
-                        <v-icon v-if="item.polygon" color="amber darken-1"
+                        <v-icon v-if="item.polygon" color="red darken-2 darken-1"
                           >far fa-check-circle</v-icon
                         >
                       </template>
@@ -425,7 +425,7 @@
     <v-alert
       v-if="!doi.loadingState"
       border="right"
-      color="amber darken-1"
+      color="red darken-2 darken-1"
       elevation="3"
       icon="fas fa-exclamation-circle"
       prominent
