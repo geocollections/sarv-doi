@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import "leaflet-fullscreen/dist/Leaflet.fullscreen";
@@ -167,12 +168,9 @@ export default {
     this.initMap();
   },
   beforeDestroy() {
-    // eslint-disable-next-line no-console
-    this.map.off("zoomend", () => console.log("zoomend OFF"));
-    // eslint-disable-next-line no-console
-    this.map.off("baselayerchange", () => console.log("baselayerchange OFF"));
-    // eslint-disable-next-line no-console
-    this.map.off("click", () => console.log("click OFF!"));
+    this.map.off("zoomend");
+    this.map.off("baselayerchange");
+    this.map.off("click");
   },
   methods: {
     initMap() {
@@ -218,7 +216,6 @@ export default {
       });
 
       if (event.name && event.name === "Maaameti fotokaart") {
-        console.log(this.overlayMaps[0].leafletObject);
         this.map.addLayer(this.overlayMaps[0].leafletObject);
         document.querySelector(
           "#map > div.leaflet-control-container > div.leaflet-top.leaflet-right > div > section > div.leaflet-control-layers-overlays > label > div > input"

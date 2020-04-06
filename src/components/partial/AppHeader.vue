@@ -68,7 +68,10 @@
 
     <!-- HEADER -->
     <v-app-bar app clipped-right dark dense fixed color="cyan darken-2">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" aria-label="Open navigation drawer" />
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        aria-label="Open navigation drawer"
+      />
 
       <v-toolbar-title class="pr-9 align-center">
         <router-link
@@ -140,10 +143,10 @@
     >
       <v-row align="center" justify="center">
         <v-col class="text-center" cols="12">
-          <h1 class="mb-1 font-weight-bold page-header animated fadeIn faster">
+          <h1 class="mb-1 font-weight-bold page-header">
             SARV·DOI
           </h1>
-          <h4 class="text-center page-subheader py-2 animated fadeIn faster">
+          <h4 class="text-center page-subheader py-2">
             Geoscience Data Repository
           </h4>
 
