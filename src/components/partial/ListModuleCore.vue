@@ -73,7 +73,6 @@
           <v-progress-linear indeterminate color="cyan darken-2" />
         </template>
 
-        <!-- Todo: find a solution where both row click work and expanded click work -->
         <template v-slot:item.data-table-expand="{ expand, isExpanded, item }">
           <div
             v-if="
@@ -94,6 +93,15 @@
 
         <template v-if="module === 'doi'" v-slot:item.identifier="{ item }">
           <div class="font-weight-bold">{{ item.identifier }}</div>
+        </template>
+
+        <template v-slot:item.resource="{ item }">
+          <div v-if="item.resource_type__value && item.resource">
+            {{ `${item.resource_type__value} / ${item.resource}` }}
+          </div>
+          <div v-else>
+            {{ item.resource }}
+          </div>
         </template>
 
         <template
@@ -255,5 +263,10 @@ export default {
 
 .expanded-link:hover {
   opacity: 0.5;
+}
+
+.list-module-core >>> .v-data-table td,
+.list-module-core >>> .v-data-table th {
+  padding: 0 8px;
 }
 </style>
