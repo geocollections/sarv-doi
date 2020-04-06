@@ -12,11 +12,13 @@ export default new Vuetify({
     themes: {
       light: {
         primary: "#0097A7",
-        anchor: "#D32F2F"
+        anchor: "#d24444",
+        customRed: "#d24444"
       },
       dark: {
         primary: "#0097A7",
-        anchor: "#D32F2F"
+        anchor: "#d24444",
+        customRed: "#d24444"
       }
     }
   }

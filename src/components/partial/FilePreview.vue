@@ -47,7 +47,7 @@
       <!-- IF ABOVE FAILS THEN SHOW FILE ICON -->
       <v-btn
         v-else
-        color="red darken-2 darken-1"
+        color="customRed "
         icon
         :href="getFileLink({ filename: data.attachment__uuid_filename })"
         :title="getFileLink({ filename: data.attachment__uuid_filename })"
@@ -59,7 +59,7 @@
 
     <div class="text-right mb-2" v-if="isAudioFile || isVideoFile">
       <v-btn
-        color="red darken-2 darken-1"
+        color="customRed "
         x-small
         icon
         :href="getFileLink({ filename: data.attachment__uuid_filename })"
