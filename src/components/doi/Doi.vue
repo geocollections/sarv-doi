@@ -221,10 +221,14 @@
                   <v-icon color="cyan darken-2">far fa-folder-open</v-icon>
                 </v-card-title>
                 <v-data-table
-                  hide-default-footer
                   disable-sort
                   :headers="attachmentHeaders"
                   :items="doi.doiAttachments"
+                  :footer-props="{
+                    'items-per-page-options': [10, 20, 50, 100, -1]
+                  }"
+                  :items-per-page="20"
+                  :hide-default-footer="doi.doiAttachments.length < 10"
                 >
                   <template v-slot:item.id="{ item }">
                     <file-preview :data="item" />
@@ -245,6 +249,11 @@
                   disable-sort
                   :headers="agentHeaders"
                   :items="doi.doiAgents"
+                  :footer-props="{
+                    'items-per-page-options': [10, 20, 50, 100, -1]
+                  }"
+                  :items-per-page="20"
+                  :hide-default-footer="doi.doiAgents.length < 10"
                 >
                   <template v-slot:item.name="{ item }">
                     <v-btn
@@ -282,6 +291,11 @@
                   disable-sort
                   :headers="relatedIdentifiersHeaders"
                   :items="doi.doiRelatedIdentifiers"
+                  :footer-props="{
+                    'items-per-page-options': [10, 20, 50, 100, -1]
+                  }"
+                  :items-per-page="20"
+                  :hide-default-footer="doi.doiRelatedIdentifiers.length < 10"
                 >
                   <template v-slot:item.value="{ item }">
                     <span style="word-break: break-all">{{ item.value }}</span>
@@ -348,6 +362,11 @@
                       disable-sort
                       :headers="geolocationsHeaders"
                       :items="doi.doiGeolocations"
+                      :footer-props="{
+                        'items-per-page-options': [10, 20, 50, 100, -1]
+                      }"
+                      :items-per-page="20"
+                      :hide-default-footer="doi.doiGeolocations.length < 10"
                     >
                       <template v-slot:item.place="{ item }">
                         <v-btn
@@ -412,6 +431,11 @@
                   disable-sort
                   :headers="datesHeaders"
                   :items="doi.doiDates"
+                  :footer-props="{
+                    'items-per-page-options': [10, 20, 50, 100, -1]
+                  }"
+                  :items-per-page="20"
+                  :hide-default-footer="doi.doiDates.length < 10"
                 />
               </v-card>
             </v-col>
