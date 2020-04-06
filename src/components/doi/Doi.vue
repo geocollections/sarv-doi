@@ -489,6 +489,7 @@ export default {
     ],
     agentHeaders: [
       { text: "Name", value: "name" },
+      { text: "Affiliation", value: "affiliation" },
       { text: "Relation", value: "agent_type__value" }
     ],
     relatedIdentifiersHeaders: [
