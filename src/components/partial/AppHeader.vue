@@ -11,11 +11,12 @@
       color="cyan darken-2"
     >
       <v-list dense>
-        <v-subheader v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
+        <v-subheader
+          v-if="$route.name !== 'dois' && $vuetify.breakpoint.smAndDown"
           >SEARCH</v-subheader
         >
         <v-text-field
-          v-if="$route.name !== 'dois' && $vuetify.breakpoint.xsOnly"
+          v-if="$route.name !== 'dois' && $vuetify.breakpoint.smAndDown"
           v-model.trim="fastSearch"
           hide-details
           clear-icon="fas fa-times"
@@ -84,13 +85,14 @@
 
       <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
         <v-btn text title="Home" to="/">Home</v-btn>
+        <v-btn text title="About" to="/about">About</v-btn>
       </v-toolbar-items>
 
       <div class="flex-grow-1"></div>
 
       <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
         <v-text-field
-          v-if="$route.name !== 'dois'"
+          v-if="$route.name !== 'dois' && $vuetify.breakpoint.mdAndUp"
           v-model.trim="fastSearch"
           hide-details
           clear-icon="fas fa-times"
@@ -180,7 +182,10 @@ export default {
     fastSearch: null,
     drawer: null,
     drawerRight: null,
-    routes: [{ icon: "fas fa-home", text: "Home", path: "/" }],
+    routes: [
+      { icon: "fas fa-home", text: "Home", path: "/" },
+      { icon: "fas fa-question-circle", text: "About", path: "/about" }
+    ],
     showOtherLinkDropdown: false,
     otherLinks: [
       {

@@ -2,7 +2,7 @@
   <v-app id="doi-public">
     <app-header />
 
-    <router-view style="margin-bottom: 141px" />
+    <router-view style="margin-bottom: 140px" />
 
     <app-footer />
   </v-app>
@@ -24,8 +24,13 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900&display=swap");
 
-#doi-public {
+html {
+  overflow-y: auto !important;
+}
+
+.v-application {
   font-family: "Nunito", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Overlay must hide everything except app header which has z-index of 1100 */

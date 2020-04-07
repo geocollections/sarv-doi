@@ -2,7 +2,7 @@ import isEmpty from "lodash/isEmpty";
 
 const api = {
   geocollectionsUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL,
-  solrUrl: "https://api.geocollections.info/solr/"
+  solrUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL + "solr/"
 };
 
 async function get(child = "", customUrl) {
@@ -56,4 +56,8 @@ export function getDoiGeolocation(id) {
 
 export function getDoiRelatedIdentifier(id) {
   return get(`doi_related_identifier/?doi=${id}&format=json`);
+}
+
+export function getAboutSarvDoi() {
+  return get(`webpages/70`);
 }

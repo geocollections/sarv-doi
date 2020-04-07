@@ -13,6 +13,7 @@
           :items="paginateByOptions"
           item-color="green"
           label="Paginate by"
+          hide-details
         />
       </div>
 
@@ -138,6 +139,7 @@
           :items="paginateByOptions"
           item-color="green"
           label="Paginate by"
+          hide-details
         />
       </div>
 
