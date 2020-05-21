@@ -3,7 +3,7 @@
     <v-carousel
       prev-icon="fas fa-angle-left"
       next-icon="fas fa-angle-right"
-      height="93.3vh"
+      height="85.7vh"
       hide-delimiters
       :show-arrows="false"
     >

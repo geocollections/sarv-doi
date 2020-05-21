@@ -250,7 +250,6 @@ export default {
             )
           );
         marker.bindTooltip(entity.name, {
-          permanent: this.markers.length <= 5,
           direction: "right",
           offset: [10, -23]
         });
