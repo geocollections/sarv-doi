@@ -70,6 +70,10 @@ export default {
   width: 100%;
 }
 
+.about >>> a {
+  font-weight: bold;
+}
+
 .carousel-text {
   font-size: 18px;
 }

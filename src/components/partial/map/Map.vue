@@ -250,6 +250,7 @@ export default {
             )
           );
         marker.bindTooltip(entity.name, {
+          permanent: locations && locations.length <= 5,
           direction: "right",
           offset: [10, -23]
         });

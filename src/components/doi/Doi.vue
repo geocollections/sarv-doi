@@ -671,6 +671,10 @@ export default {
   margin-top: 48px;
 }
 
+.doi-detail-view >>> .v-btn--text {
+  text-decoration: underline;
+}
+
 .banner-text {
   font-size: 2rem;
   line-height: 1.1;
