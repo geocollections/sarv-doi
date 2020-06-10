@@ -232,12 +232,12 @@ export default {
       this.markers = [];
 
       locations.forEach(entity => {
-        let marker = L.marker(
+        let marker = L.circleMarker(
           {
             lat: parseFloat(entity.lat),
             lng: parseFloat(entity.lng)
           },
-          { icon: this.markerIcon }
+          { radius: 6, color: "#d24444" }
         ).addTo(this.map);
         if (entity.id)
           marker.on("click", () =>
@@ -252,7 +252,7 @@ export default {
         marker.bindTooltip(entity.name, {
           permanent: locations && locations.length <= 5,
           direction: "right",
-          offset: [10, -23]
+          offset: [10, 0]
         });
         this.markers.push(marker);
       });
