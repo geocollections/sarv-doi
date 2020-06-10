@@ -45,6 +45,9 @@ import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import "leaflet-fullscreen/dist/Leaflet.fullscreen";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import "leaflet.markercluster/dist/leaflet.markercluster";
 
 export default {
   name: "Map",
@@ -230,34 +233,38 @@ export default {
 
     setMarkers(locations) {
       this.markers = [];
+      let markersCluster = L.markerClusterGroup();
 
-      locations.forEach(entity => {
+      locations.forEach((entity, index, arr) => {
         let marker = L.circleMarker(
           {
             lat: parseFloat(entity.lat),
             lng: parseFloat(entity.lng)
           },
-          { radius: 6, color: "#d24444" }
-        ).addTo(this.map);
+          { radius: 6, color: "#d24444", weight: 1 }
+        );
         if (entity.id)
           marker.on("click", () =>
-            window.open(
-              this.getGeocollectionsUrl({
-                object: "locality",
-                id: entity.id
-              }),
-              "GeocollectionsWindow"
-            )
+            this.handleMarkerClick({ object: "locality", id: entity.id })
           );
         marker.bindTooltip(entity.name, {
-          permanent: locations && locations.length <= 5,
+          permanent: arr && arr.length <= 5,
           direction: "right",
           offset: [10, 0]
         });
-        this.markers.push(marker);
+
+        if (arr.length > 100) markersCluster.addLayer(marker);
+        else {
+          marker.addTo(this.map);
+          this.markers.push(marker);
+        }
       });
-      let bounds = new L.featureGroup(this.markers).getBounds();
-      this.map.fitBounds(bounds, { maxZoom: 10 });
+      if (locations.length > 100) this.map.addLayer(markersCluster);
+
+      if (this.markers.length > 0) {
+        let bounds = new L.featureGroup(this.markers).getBounds();
+        this.map.fitBounds(bounds, { maxZoom: 10 });
+      }
     },
 
     setPolygon(arrayOfPoints) {
@@ -276,6 +283,10 @@ export default {
           this.map.fitBounds(polygons.getBounds());
         }
       }
+    },
+
+    handleMarkerClick(params) {
+      window.open(this.getGeocollectionsUrl(params), "GeocollectionsWindow");
     },
 
     getGeocollectionsUrl(params) {
