@@ -471,7 +471,7 @@ export default {
   name: "Doi",
   components: { FilePreview, Map },
   data: () => ({
-    egfUrl: "https://tarkvara.datel.ee/fond/egf/",
+    egfUrl: "https://fond.egt.ee/fond/egf/",
     showGeolocationsTable: false,
     generalDataHeaders: [
       { text: "Citation", value: "id" },
