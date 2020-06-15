@@ -231,7 +231,7 @@ export default {
       {
         icon: "fas fa-atlas",
         text: "Geoloogiafond",
-        url: "https://www.egt.ee/et/fond-search"
+        url: "https://fond.egt.ee"
       }
     ]
   }),
