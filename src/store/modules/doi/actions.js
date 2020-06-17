@@ -2,7 +2,7 @@ import {
   getDoi,
   getDoiAgent,
   getDoiAttachment,
-  getDoiDate,
+  getDoiDate, getDoiEgfFiles,
   getDoiGeolocation,
   getDoiRelatedIdentifier,
   getDois
@@ -35,6 +35,10 @@ const actions = {
       await dispatch("getDoiDates", params.id);
       await dispatch("getDoiGeolocations", params.id);
       await dispatch("getDoiRelatedIdentifiers", params.id);
+
+      if (response.results[0] && response.results[0].egf) {
+        await dispatch("getDoiEgfFiles", response.results[0].egf);
+      }
     }
 
     await dispatch("setLoadingState", false);
@@ -72,6 +76,13 @@ const actions = {
     const doiRelatedIdentifiers = await getDoiRelatedIdentifier(id);
     if (doiRelatedIdentifiers && doiRelatedIdentifiers.results) {
       commit("SET_DOI_RELATED_IDENTIFIERS", doiRelatedIdentifiers.results);
+    }
+  },
+
+  async getDoiEgfFiles({ commit }, id) {
+    const doiEgfFiles = await getDoiEgfFiles(id);
+    if (doiEgfFiles) {
+      commit("SET_DOI_EGF_FILES", doiEgfFiles);
     }
   },
 

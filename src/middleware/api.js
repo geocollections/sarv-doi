@@ -2,7 +2,8 @@ import isEmpty from "lodash/isEmpty";
 
 const api = {
   geocollectionsUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL,
-  solrUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL + "solr/"
+  solrUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL + "solr/",
+  egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
 };
 
 async function get(child = "", customUrl) {
@@ -21,7 +22,7 @@ export function getDois(routeParams, searchParams) {
         ? `${searchParams.orderBy.substring(1)} desc`
         : `${searchParams.orderBy} asc`;
       return get(
-        `doi/?q=${routeParams.q}&start=${start}&rows=${searchParams.paginateBy}&sort=${sort}&format=json`,
+        `doi/?q=*${routeParams.q}*&start=${start}&rows=${searchParams.paginateBy}&sort=${sort}&format=json`,
         api.solrUrl
       );
     } else {
@@ -60,4 +61,8 @@ export function getDoiRelatedIdentifier(id) {
 
 export function getAboutSarvDoi() {
   return get(`webpages/70`);
+}
+
+export function getDoiEgfFiles(id) {
+  return get(id, api.egfFilesUrl);
 }

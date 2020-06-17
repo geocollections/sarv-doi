@@ -157,10 +157,29 @@
                   hide-default-footer
                   disable-sort
                   :headers="egfHeaders"
-                  :items="doi.doi"
+                  :items="computedEgfFiles"
                 >
-                  <template v-slot:item.id="{ item }">
+                  <template v-slot:item.preview="{ item }">
+                    <v-img
+                      v-if="item.preview"
+                      alt="Image preview..."
+                      :src="getEgfFile(doi.doi[0].egf, item.preview)"
+                      :lazy-src="getEgfFile(doi.doi[0].egf, item.preview)"
+                      :title="egfUrl + doi.doi[0].egf"
+                      max-height="130"
+                      max-width="175"
+                      class="link my-1"
+                      @click="
+                        openUrl({
+                          url: egfUrl + doi.doi[0].egf,
+                          target: 'EgfWindow'
+                        })
+                      "
+                    >
+                    </v-img>
+
                     <v-btn
+                      v-else-if="item.isLink"
                       icon
                       color="customRed "
                       :href="egfUrl + doi.doi[0].egf"
@@ -169,14 +188,34 @@
                     >
                       <v-icon color="customRed ">fas fa-paperclip</v-icon>
                     </v-btn>
-                  </template>
 
-                  <template v-slot:item.egf="{ item }">
-                    EGF:{{ item.egf }}
-                  </template>
-
-                  <template v-slot:item.doi="{ item }">
                     <v-btn
+                      v-else
+                      icon
+                      color="customRed "
+                      :href="egfUrl + doi.doi[0].egf"
+                      :title="egfUrl + doi.doi[0].egf"
+                      target="EgfWindow"
+                    >
+                      <v-icon color="customRed">far fa-file</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <template v-slot:item.title="{ item }">
+                    <div>
+                      <span class="font-weight-bold">{{ item.title }}</span>
+                      <span
+                        v-if="item.size"
+                        class="ml-1"
+                        style="white-space: nowrap;"
+                        >({{ item.size }})</span
+                      >
+                    </div>
+                  </template>
+
+                  <template v-slot:item.url="{ item }">
+                    <v-btn
+                      v-if="item.isLink"
                       text
                       class="text-none wrap-link pa-0"
                       color="customRed "
@@ -186,26 +225,20 @@
                     >
                       {{ egfUrl + doi.doi[0].egf }}
                     </v-btn>
+
+                    <v-btn
+                      v-else
+                      icon
+                      color="customRed "
+                      :href="getEgfFile(doi.doi[0].egf, item.id)"
+                      :title="getEgfFile(doi.doi[0].egf, item.id)"
+                      target="EgfDownloadWindow"
+                    >
+                      <v-icon color="customRed">fas fa-download</v-icon>
+                    </v-btn>
                   </template>
                 </v-data-table>
               </v-card>
-              <!--            <v-card class="mobile-override elevation-3">-->
-              <!--              <v-card-title class="cyan--text darken-2 colored-border mb-2">-->
-              <!--                <span>EGF Link</span>-->
-              <!--                <v-spacer />-->
-              <!--                <v-icon color="cyan darken-2">fas fa-atlas</v-icon>-->
-              <!--              </v-card-title>-->
-
-              <!--              <v-card-actions class="justify-center" v-if="doi.doi[0].egf">-->
-              <!--                <v-btn-->
-              <!--                  color="cyan darken-2"-->
-              <!--                  :href="egfUrl + doi.doi[0].egf"-->
-              <!--                  :title="egfUrl + doi.doi[0].egf"-->
-              <!--                  target="EgfWindow"-->
-              <!--                  >See DOI in EGF portal</v-btn-->
-              <!--                >-->
-              <!--              </v-card-actions>-->
-              <!--            </v-card>-->
             </v-col>
 
             <!-- FILES -->
@@ -501,9 +534,9 @@ export default {
       { text: "DataCite updated", value: "datacite_updated" }
     ],
     egfHeaders: [
-      { text: "Link", value: "id", align: "center" },
-      { text: "EGF no.", value: "egf" },
-      { text: "EGF url", value: "doi" }
+      { text: "Link / Preview", value: "preview", align: "center" },
+      { text: "Title", value: "title" },
+      { text: "EGF url", value: "url" }
     ],
     attachmentHeaders: [
       { text: "Preview", value: "id", align: "center" },
@@ -603,6 +636,43 @@ export default {
         this.doi.doi.length > 0 &&
         this.doi.doi[0].egf
       );
+    },
+
+    computedEgfFiles() {
+      if (this.doi.doiEgfFiles && this.doi.doiEgfFiles.length > 0) {
+        let previews = this.doi.doiEgfFiles.filter(
+          file => file.tyyp === "PREVIEW"
+        );
+        let others = this.doi.doiEgfFiles.filter(
+          file => file.tyyp !== "PREVIEW"
+        );
+
+        let egfFiles = previews.map(preview => {
+          let correspondingOther = others.find(file => {
+            if (preview.addon) return file.id === preview["addon-to"];
+            else return null;
+          });
+
+          if (correspondingOther) {
+            return {
+              ...correspondingOther,
+              preview:
+                preview.id && this.isPreviewImage(preview.title)
+                  ? preview.id
+                  : null,
+              size: this.formatBytes(correspondingOther.size)
+            };
+          } else return null;
+        });
+
+        egfFiles.unshift({
+          preview: null,
+          title: `EGF:${this.doi.doi[0].egf}`,
+          isLink: true
+        });
+
+        return egfFiles;
+      } else return [];
     }
   },
   watch: {
@@ -660,6 +730,49 @@ export default {
         }
         return citation;
       }
+    },
+
+    formatBytes(bytes, decimals = 2) {
+      if (bytes === 0) return "0 Bytes";
+
+      const k = 1000;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+    },
+
+    getEgfFile(egfNumber, fileId) {
+      if (egfNumber && fileId) {
+        return `https://fond.egt.ee/fond/get-file/${egfNumber}/${fileId}`;
+      } else return "";
+    },
+
+    openUrl(params) {
+      window.open(params.url, params.target || "FilePreviewWindow");
+    },
+
+    isPreviewImage(filename) {
+      if (filename) {
+        const imageTypes = [
+          ".apng",
+          ".bmp",
+          ".gif",
+          ".ico",
+          ".cur",
+          ".jpg",
+          ".jpeg",
+          ".jfif",
+          ".pjpeg",
+          ".pjp",
+          ".png",
+          ".svg",
+          ".webp"
+        ];
+        return imageTypes.some(type => filename.endsWith(type));
+      } else return false;
     }
   }
 };
@@ -735,5 +848,10 @@ export default {
     height: unset;
     min-height: 48px;
   }
+}
+
+.link:hover {
+  cursor: pointer;
+  opacity: 0.85;
 }
 </style>

@@ -10,6 +10,7 @@ const state = {
   doiDates: [],
   doiGeolocations: [],
   doiRelatedIdentifiers: [],
+  doiEgfFiles: [],
   dois: [],
   doiCount: 0
 };

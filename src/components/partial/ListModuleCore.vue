@@ -128,7 +128,7 @@
 
     <!-- PAGINATION -->
     <div
-      v-if="itemCount > 0"
+      v-if="itemCount > 10"
       class="pagination d-flex flex-column flex-md-row justify-space-between align-center"
     >
       <div>

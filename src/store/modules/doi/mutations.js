@@ -32,6 +32,10 @@ const mutations = {
     state.doiRelatedIdentifiers = results;
   },
 
+  SET_DOI_EGF_FILES(state, results) {
+    state.doiEgfFiles = results;
+  },
+
   RESET_DOI(state) {
     state.doi = null;
     state.doiAttachments = [];
@@ -39,6 +43,7 @@ const mutations = {
     state.doiDates = [];
     state.doiGeolocations = [];
     state.doiRelatedIdentifiers = [];
+    state.doiEgfFiles = [];
   }
 };
 
