@@ -6,12 +6,13 @@ const api = {
   egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
 };
 
-async function get(child = "", customUrl) {
+async function get(child = "", customUrl, isEgfFile = false) {
   let url = api.geocollectionsUrl + child;
   if (customUrl) url = customUrl + child;
 
   const response = await fetch(url, { method: "GET" });
-  return await response.json();
+  if (isEgfFile) return await response.blob();
+  else return await response.json();
 }
 
 export function getDois(routeParams, searchParams) {
@@ -65,4 +66,8 @@ export function getAboutSarvDoi() {
 
 export function getDoiEgfFiles(id) {
   return get(id, api.egfFilesUrl);
+}
+
+export function downloadEgfFile(url) {
+  return get("", url, true);
 }

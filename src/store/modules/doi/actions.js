@@ -2,7 +2,8 @@ import {
   getDoi,
   getDoiAgent,
   getDoiAttachment,
-  getDoiDate, getDoiEgfFiles,
+  getDoiDate,
+  getDoiEgfFiles,
   getDoiGeolocation,
   getDoiRelatedIdentifier,
   getDois

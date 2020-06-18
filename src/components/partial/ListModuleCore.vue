@@ -169,7 +169,7 @@
 import ExportButtons from "./ExportButtons";
 export default {
   name: "ListModuleCore",
-  components: {ExportButtons},
+  components: { ExportButtons },
   props: {
     module: {
       type: String,

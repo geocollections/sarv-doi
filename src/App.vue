@@ -38,6 +38,13 @@ html {
   z-index: 1075 !important;
 }
 
+/* Custom override for md and lower screens */
+@media (max-width: 1264px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
 /* Custom override for xl screens */
 @media (min-width: 1904px) {
   .container {

@@ -225,17 +225,12 @@
                     >
                       {{ egfUrl + doi.doi[0].egf }}
                     </v-btn>
-
-                    <v-btn
+                    <egf-file-download
                       v-else
-                      icon
-                      color="customRed "
-                      :href="getEgfFile(doi.doi[0].egf, item.id)"
-                      :title="getEgfFile(doi.doi[0].egf, item.id)"
-                      download
-                    >
-                      <v-icon color="customRed">fas fa-download</v-icon>
-                    </v-btn>
+                      :egf="doi.doi[0].egf"
+                      :file-id="item.id"
+                      :filename="item.title"
+                    />
                   </template>
                 </v-data-table>
               </v-card>
@@ -499,10 +494,11 @@
 import { mapState } from "vuex";
 import FilePreview from "../partial/FilePreview";
 import Map from "../partial/map/Map";
+import EgfFileDownload from "../partial/EgfFileDownload";
 
 export default {
   name: "Doi",
-  components: { FilePreview, Map },
+  components: { EgfFileDownload, FilePreview, Map },
   data: () => ({
     egfUrl: "https://fond.egt.ee/fond/egf/",
     showGeolocationsTable: false,
