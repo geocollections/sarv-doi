@@ -232,7 +232,7 @@
                       color="customRed "
                       :href="getEgfFile(doi.doi[0].egf, item.id)"
                       :title="getEgfFile(doi.doi[0].egf, item.id)"
-                      target="EgfDownloadWindow"
+                      download
                     >
                       <v-icon color="customRed">fas fa-download</v-icon>
                     </v-btn>

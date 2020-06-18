@@ -3,7 +3,7 @@
     <!-- PAGINATION -->
     <div
       v-if="itemCount > 0"
-      class="pagination d-flex flex-column flex-md-row justify-space-between align-center"
+      class="pagination d-flex flex-column flex-md-row justify-space-between align-center mt-1 mt-md-0 mb-2"
     >
       <div>
         <v-select
@@ -18,7 +18,9 @@
       </div>
 
       <!-- EXPORT -->
-      <div></div>
+      <div class="my-2 my-md-0 flex-md-grow-1 mx-3">
+        <export-buttons :table-data="items" />
+      </div>
 
       <div>
         <v-pagination
@@ -34,7 +36,7 @@
     </div>
 
     <!-- DATA TABLE -->
-    <v-card class="table-card my-1">
+    <v-card class="table-card py-1">
       <v-card-title>
         <v-icon class="mr-2" color="cyan darken-2" large>fas fa-list</v-icon>
         <v-badge color="cyan darken-2">
@@ -129,7 +131,7 @@
     <!-- PAGINATION -->
     <div
       v-if="itemCount > 10"
-      class="pagination d-flex flex-column flex-md-row justify-space-between align-center"
+      class="pagination d-flex flex-column flex-md-row justify-space-between align-center mt-4 mt-md-2"
     >
       <div>
         <v-select
@@ -144,7 +146,9 @@
       </div>
 
       <!-- EXPORT -->
-      <div></div>
+      <div class="my-2 my-md-0 flex-md-grow-1 mx-3">
+        <export-buttons :table-data="items" />
+      </div>
 
       <div>
         <v-pagination
@@ -162,8 +166,10 @@
 </template>
 
 <script>
+import ExportButtons from "./ExportButtons";
 export default {
   name: "ListModuleCore",
+  components: {ExportButtons},
   props: {
     module: {
       type: String,
