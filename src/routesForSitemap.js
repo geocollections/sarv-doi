@@ -24,6 +24,11 @@ module.exports = [
     path: "/about",
     name: "about",
     component: () => import("./views/About")
+  },
+  {
+    path: "/how_to",
+    name: "DOI howto",
+    component: () => import("./views/DoiHowTo")
   }
 ];
 

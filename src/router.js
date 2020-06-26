@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Dois from "./views/Dois";
 import About from "./views/About";
+import DoiHowTo from "./views/DoiHowTo";
 
 Vue.use(Router);
 
@@ -27,6 +28,11 @@ export default new Router({
       path: "/about",
       name: "about",
       component: About
+    },
+    {
+      path: "/how_to",
+      name: "DOI howto",
+      component: DoiHowTo
     }
   ]
 });

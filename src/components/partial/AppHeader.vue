@@ -86,6 +86,7 @@
       <v-toolbar-items v-if="$vuetify.breakpoint.smAndUp">
         <v-btn text title="Home" to="/">Home</v-btn>
         <v-btn text title="About" to="/about">About</v-btn>
+        <v-btn text title="About" to="/how_to">DOI howto</v-btn>
       </v-toolbar-items>
 
       <div class="flex-grow-1"></div>
@@ -184,7 +185,8 @@ export default {
     drawerRight: null,
     routes: [
       { icon: "fas fa-home", text: "Home", path: "/" },
-      { icon: "fas fa-question-circle", text: "About", path: "/about" }
+      { icon: "fas fa-question-circle", text: "About", path: "/about" },
+      { icon: "fas fa-hands-helping", text: "DOI howto", path: "/how_to" }
     ],
     showOtherLinkDropdown: false,
     otherLinks: [

@@ -64,6 +64,10 @@ export function getAboutSarvDoi() {
   return get(`webpages/70`);
 }
 
+export function getDoiHowTo() {
+  return get(`webpages/71`);
+}
+
 export function getDoiEgfFiles(id) {
   return get(id, api.egfFilesUrl);
 }

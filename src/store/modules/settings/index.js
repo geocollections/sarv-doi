@@ -1,7 +1,8 @@
-import { getAboutSarvDoi } from "../../../middleware/api";
+import {getAboutSarvDoi, getDoiHowTo} from "../../../middleware/api";
 
 const state = {
   about: null,
+  doiHowTo: null,
   carouselSlides: [
     {
       id: 1,
@@ -16,12 +17,23 @@ const actions = {
     if (response && response.results) {
       commit("ABOUT_PAGE_INFO", response.results);
     }
+  },
+
+  async getDoiHowToInfo({ commit }) {
+    const response = await getDoiHowTo();
+    if (response && response.results) {
+      commit("DOI_HOW_TO_INFO", response.results);
+    }
   }
 };
 
 const mutations = {
   ABOUT_PAGE_INFO(state, payload) {
     state.about = payload[0];
+  },
+
+  DOI_HOW_TO_INFO(state, payload) {
+    state.doiHowTo = payload[0];
   }
 };
 
