@@ -224,7 +224,7 @@ export default {
         rowData !== null &&
         rowData.id !== null
       ) {
-        this.$router.push({ path: "/10.15152/GEO." + rowData.id });
+        this.$router.push({ path: rowData.identifier });
       }
     }
   }

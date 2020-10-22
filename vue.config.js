@@ -7,6 +7,8 @@ module.exports = {
   transpileDependencies: ["vuetify"],
   pluginOptions: {
     sitemap: {
+      productionOnly: true,
+      outputDir: "./public",
       pretty: true,
       baseURL: "https://doi.geocollections.info",
       routes

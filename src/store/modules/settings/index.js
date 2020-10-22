@@ -1,4 +1,4 @@
-import {getAboutSarvDoi, getDoiHowTo} from "../../../middleware/api";
+import { getAboutSarvDoi, getDoiHowTo } from "../../../middleware/api";
 
 const state = {
   about: null,

@@ -25,6 +25,11 @@ export default new Router({
       component: () => import("./components/doi/Doi.vue")
     },
     {
+      path: "/10.23679/:id(\\d+)",
+      name: "doi",
+      component: () => import("./components/doi/Doi.vue")
+    },
+    {
       path: "/about",
       name: "about",
       component: About
