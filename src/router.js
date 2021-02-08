@@ -26,7 +26,7 @@ export default new Router({
     },
     {
       path: "/10.23679/:id(\\d+)",
-      name: "doi",
+      name: "doi new",
       component: () => import("./components/doi/Doi.vue")
     },
     {

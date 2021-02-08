@@ -1,8 +1,8 @@
 import isEmpty from "lodash/isEmpty";
 
 const api = {
-  geocollectionsUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL,
-  solrUrl: process.env.VUE_APP_GEOCOLLECTIONS_PUBLIC_API_URL + "solr/",
+  geocollectionsUrl: "https://api.geocollections.info/",
+  solrUrl: "https://api.geocollections.info/solr/",
   egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
 };
 

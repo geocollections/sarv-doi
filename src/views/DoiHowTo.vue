@@ -1,10 +1,10 @@
 <template>
-  <div class="doi-howto">
+  <div class="doi-howto fill-height">
     <v-carousel
       prev-icon="fas fa-angle-left"
       next-icon="fas fa-angle-right"
-      height="85.7vh"
       hide-delimiters
+      height="100%"
       :show-arrows="false"
     >
       <v-carousel-item
