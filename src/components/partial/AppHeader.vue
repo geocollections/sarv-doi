@@ -154,7 +154,7 @@
           </h4>
 
           <v-row align="center" justify="center">
-            <v-col cols="12" class="pa-0" style="max-width: 250px">
+            <v-col cols="12" style="max-width: 250px">
               <v-text-field
                 v-model.trim="fastSearch"
                 hide-details
