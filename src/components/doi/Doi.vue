@@ -40,7 +40,6 @@
                   disable-sort
                   disable-filtering
                   disable-pagination
-                  hide-default-header
                   hide-default-footer
                   :headers="computedGeneralDataHeaders"
                   :items="doi.doi"
