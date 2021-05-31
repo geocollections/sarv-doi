@@ -140,7 +140,7 @@
     <!-- LANDING IMAGE -->
     <v-parallax
       v-if="$route.name === 'dois'"
-      class="landing-image"
+      class="landing-image elevation-3"
       src="https://files.geocollections.info/img/doi/header.jpg"
       style="height: 30vh;"
     >
