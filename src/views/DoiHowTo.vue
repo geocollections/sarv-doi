@@ -53,6 +53,9 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "DoiHowTo",
+  metaInfo: {
+    title: "How-To"
+  },
   created() {
     this.getDoiHowToInfo();
   },

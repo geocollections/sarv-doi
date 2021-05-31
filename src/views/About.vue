@@ -53,6 +53,9 @@ import { mapActions, mapState } from "vuex";
 
 export default {
   name: "About",
+  metaInfo: {
+    title: "About"
+  },
   created() {
     this.getAboutPageInfo();
   },

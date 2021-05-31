@@ -18,6 +18,9 @@ import ListModuleCore from "../components/partial/ListModuleCore";
 
 export default {
   name: "Dois",
+  metaInfo: {
+    title: "DOIs"
+  },
   components: {
     ListModuleCore
   },

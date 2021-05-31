@@ -5,6 +5,7 @@ module.exports = {
   productionSourceMap: false,
   // EDGE doesn't work otherwise
   transpileDependencies: ["vuetify"],
+  parallel: process.env.CI ? +process.env.CIRCLE_NODE_TOTAL : undefined,
   pluginOptions: {
     sitemap: {
       productionOnly: true,

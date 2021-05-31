@@ -498,6 +498,18 @@ import EgfFileDownload from "../partial/EgfFileDownload";
 export default {
   name: "Doi",
   components: { EgfFileDownload, FilePreview, Map },
+  metaInfo() {
+    let identifier,
+      description = "";
+    if (this.doi.doi) {
+      identifier = `DOI: ${this.doi.doi[0].identifier}`;
+      description = this.doi.doi[0].title;
+    }
+    return {
+      title: identifier,
+      description: description
+    };
+  },
   data: () => ({
     egfUrl: "https://fond.egt.ee/fond/egf/",
     showGeolocationsTable: false,

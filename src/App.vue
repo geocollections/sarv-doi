@@ -17,6 +17,10 @@ export default {
   components: {
     AppHeader,
     AppFooter
+  },
+  metaInfo: {
+    title: "Geoscience Data Repository",
+    titleTemplate: "%s | SARV·DOI"
   }
 };
 </script>
