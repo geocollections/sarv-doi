@@ -171,6 +171,7 @@
       v-if="$route.name === 'dois'"
       class="landing-image elevation-3"
       src="https://files.geocollections.info/img/doi/header.jpg"
+      alt="landing image"
       style="height: 30vh;"
     >
       <v-row align="center" justify="center">
