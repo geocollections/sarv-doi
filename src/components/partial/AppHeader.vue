@@ -48,14 +48,21 @@
 
         <v-subheader>OTHER RESOURCES</v-subheader>
         <v-list-item
-          v-for="item in otherLinks"
+          v-for="(item, id) in otherLinks"
           :key="item.text"
           :href="item.url"
           target="OtherLinkWindow"
           :title="item.text"
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <img
+              v-if="id === 0"
+              height="24"
+              width="24"
+              :src="require('@/assets/img/emaapou6white.svg')"
+              :alt="item.text"
+            />
+            <v-icon v-else>{{ item.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
@@ -117,19 +124,41 @@
 
           <v-list color="cyan darken-2" dark dense>
             <v-list-item
-              v-for="item in otherLinks"
+              v-for="(item, id) in otherLinks"
               :key="item.text"
               :href="item.url"
               target="OtherLinkWindow"
             >
               <v-list-item-icon>
-                <v-icon v-text="item.icon" />
+                <img
+                  v-if="id === 0"
+                  height="24"
+                  width="24"
+                  :src="require('@/assets/img/emaapou6white.svg')"
+                  :alt="item.text"
+                />
+                <v-icon v-else v-text="item.icon" />
               </v-list-item-icon>
               <v-list-item-title>{{ item.text }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
       </v-toolbar-items>
+
+      <v-btn
+        small
+        icon
+        fab
+        href="https://geoloogia.info"
+        target="EMaapouWindow"
+      >
+        <img
+          height="24"
+          width="24"
+          :src="require('@/assets/img/emaapou6white.svg')"
+          alt="e-Geology"
+        />
+      </v-btn>
 
       <!--      <v-app-bar-nav-icon-->
       <!--        @click.stop="drawerRight = !drawerRight"-->
@@ -190,6 +219,11 @@ export default {
     ],
     showOtherLinkDropdown: false,
     otherLinks: [
+      {
+        icon: require("@/assets/img/emaapou6white.svg"),
+        text: "e-Geology",
+        url: "https://geoloogia.info/"
+      },
       {
         icon: "fas fa-database",
         text: "DataCite",
