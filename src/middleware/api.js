@@ -3,7 +3,8 @@ import isEmpty from "lodash/isEmpty";
 const api = {
   geocollectionsUrl: "https://api.geocollections.info/",
   solrUrl: "https://api.geocollections.info/solr/",
-  egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
+  // egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
+  egfFilesUrl: "https://api.geoloogia.info/egf/file-list/"
 };
 
 async function get(child = "", customUrl, isEgfFile = false) {
