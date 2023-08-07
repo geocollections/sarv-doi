@@ -34,7 +34,10 @@ const actions = {
       await dispatch("getDoiAttachments", params.id);
       await dispatch("getDoiAgents", params.id);
       await dispatch("getDoiDates", params.id);
-      await dispatch("getDoiGeolocations", params.id);
+      await dispatch("getDoiGeolocations", {
+        id: params.id,
+        egf: response.results[0] && response.results[0].egf
+      });
       await dispatch("getDoiRelatedIdentifiers", params.id);
 
       if (response.results[0] && response.results[0].egf) {
@@ -66,10 +69,22 @@ const actions = {
     }
   },
 
-  async getDoiGeolocations({ commit }, id) {
+  async getDoiGeolocations({ commit }, { id, egf }) {
     const doiGeolocations = await getDoiGeolocation(id);
     if (doiGeolocations && doiGeolocations.results) {
-      commit("SET_DOI_GEOLOCATIONS", doiGeolocations.results);
+      let locations = doiGeolocations.results;
+
+      // Fast fix: In case of EGF filtering out duplicate polygons, otherwise map only outlines
+      if (egf) {
+        locations = locations.filter((item, index, arr) => {
+          if (item.polygon) {
+            return index === arr.findIndex(i => i.polygon === item.polygon);
+          }
+          return true;
+        });
+      }
+
+      commit("SET_DOI_GEOLOCATIONS", locations);
     }
   },
 
