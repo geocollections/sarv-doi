@@ -1,7 +1,7 @@
 
 #
 # ---- Base ----
-FROM node:10.21.1-alpine AS base
+FROM node:10.24.1-alpine AS base
 WORKDIR /app
 COPY package.json .
 
