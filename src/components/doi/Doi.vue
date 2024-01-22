@@ -172,13 +172,13 @@
                       alt="Image preview..."
                       :src="getEgfFile(doi.doi[0].egf, item.preview)"
                       :lazy-src="getEgfFile(doi.doi[0].egf, item.preview)"
-                      :title="egfUrl + doi.doi[0].egf"
+                      :title="computedEgfUrl"
                       max-height="130"
                       max-width="175"
                       class="link my-1"
                       @click="
                         openUrl({
-                          url: egfUrl + doi.doi[0].egf,
+                          url: computedEgfUrl,
                           target: 'EgfWindow'
                         })
                       "
@@ -186,22 +186,11 @@
                     </v-img>
 
                     <v-btn
-                      v-else-if="item.isLink"
-                      icon
-                      color="customRed "
-                      :href="egfUrl + doi.doi[0].egf"
-                      :title="egfUrl + doi.doi[0].egf"
-                      target="EgfWindow"
-                    >
-                      <v-icon color="customRed ">fas fa-paperclip</v-icon>
-                    </v-btn>
-
-                    <v-btn
                       v-else
                       icon
                       color="customRed "
-                      :href="egfUrl + doi.doi[0].egf"
-                      :title="egfUrl + doi.doi[0].egf"
+                      :href="computedEgfUrl"
+                      :title="computedEgfUrl"
                       target="EgfWindow"
                     >
                       <v-icon color="customRed">far fa-file</v-icon>
@@ -221,19 +210,7 @@
                   </template>
 
                   <template v-slot:item.url="{ item }">
-                    <v-btn
-                      v-if="item.isLink"
-                      text
-                      class="text-none wrap-link pa-0"
-                      color="customRed "
-                      :href="egfUrl + doi.doi[0].egf"
-                      :title="egfUrl + doi.doi[0].egf"
-                      target="EgfWindow"
-                    >
-                      {{ egfUrl + doi.doi[0].egf }}
-                    </v-btn>
                     <egf-file-download
-                      v-else
                       :egf="doi.doi[0].egf"
                       :file-id="item.id"
                       :filename="item.title"
@@ -733,7 +710,7 @@ export default {
 
     getEgfFile(egfNumber, fileId) {
       if (egfNumber && fileId) {
-        return `https://fond.egt.ee/fond/get-file/${egfNumber}/${fileId}`;
+        return `https://api.geocollections.info/egt/get-file/${egfNumber}/${fileId}`;
       } else return "";
     },
 
