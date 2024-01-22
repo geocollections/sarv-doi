@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { downloadEgfFile } from "../../middleware/api";
+import { downloadEgfFile } from "@/middleware/api";
 import toastMixin from "../../mixins/toastMixin";
 
 export default {
@@ -42,10 +42,12 @@ export default {
       type: String
     }
   },
-  data: () => ({
-    egfFileUrl: "https://fond.egt.ee/fond/get-file",
-    loading: false
-  }),
+  data() {
+    return {
+      egfFileUrl: "https://api.geoloogia.info/egf/get-file",
+      loading: false
+    };
+  },
   methods: {
     downloadEgfFile(egf, fileId, filename) {
       if (!this.loading) {
