@@ -10,18 +10,6 @@
           <span class="identifier">{{ doi.doi[0].identifier }}: </span>
           <span class="font-weight-bold">{{ doi.doi[0].title }}</span>
         </div>
-
-        <!--      <template v-slot:actions>-->
-        <!--        <v-btn color="customRed " icon title="Share">-->
-        <!--          <v-icon>fas fa-share-alt</v-icon>-->
-        <!--        </v-btn>-->
-        <!--        <v-btn color="customRed " icon title="Copy link">-->
-        <!--          <v-icon>far fa-copy</v-icon>-->
-        <!--        </v-btn>-->
-        <!--        <v-btn color="customRed " icon title="Print">-->
-        <!--          <v-icon>fas fa-print</v-icon>-->
-        <!--        </v-btn>-->
-        <!--      </template>-->
       </v-banner>
 
       <v-row>
@@ -46,6 +34,21 @@
                 >
                   <template v-slot:item.id="{ item }">
                     <span>{{ getCitation(item) }}</span>
+                  </template>
+
+                  <template v-slot:item.egf="{ item }">
+                    <v-btn
+                      text
+                      height="unset"
+                      min-width="unset"
+                      class="text-none wrap-link pa-0 font-weight-bold"
+                      color="customRed"
+                      :href="computedEgfUrl"
+                      :title="computedEgfUrl"
+                      target="EgfWindow"
+                    >
+                      {{ computedEgfUrl }}
+                    </v-btn>
                   </template>
 
                   <template v-slot:item.licence__licence_en="{ item }">
@@ -153,10 +156,15 @@
                   <v-icon color="cyan darken-2">fas fa-atlas</v-icon>
                 </v-card-title>
                 <v-data-table
-                  hide-default-footer
+                  :hide-default-footer="doi.doiEgfFiles.length < 11"
+                  :footer-props="{
+                    itemsPerPageText: '',
+                    itemsPerPageOptions: [5, -1],
+                    itemsPerPageAllText: 'Kõik'
+                  }"
                   disable-sort
                   :headers="egfHeaders"
-                  :items="computedEgfFiles"
+                  :items="doi.doiEgfFiles"
                 >
                   <template v-slot:item.preview="{ item }">
                     <v-img
@@ -330,6 +338,7 @@
 
                   <template v-slot:item.id="{ item }">
                     <v-btn
+                      v-if="item.value"
                       icon
                       color="customRed "
                       :href="getDoiUrl({ doi: item.value })"
@@ -516,6 +525,7 @@ export default {
     generalDataHeaders: [
       { text: "Citation", value: "id" },
       { text: "DOI", value: "identifier" },
+      { text: "EGF link", value: "egf" },
       { text: "Resource type", value: "resource_type__value" },
       { text: "Resource topic", value: "resource" },
       { text: "Author(s)", value: "creators" },
@@ -581,6 +591,13 @@ export default {
   computed: {
     ...mapState(["doi"]),
 
+    computedEgfUrl() {
+      if (this.doi.doi[0].egf) {
+        return this.egfUrl + this.doi.doi[0].egf;
+      }
+      return "";
+    },
+
     computedGeneralDataHeaders() {
       return this.generalDataHeaders.filter(header => {
         if (this.doi.doi[0][header.value]) {
@@ -643,43 +660,6 @@ export default {
         this.doi.doi.length > 0 &&
         this.doi.doi[0].egf
       );
-    },
-
-    computedEgfFiles() {
-      if (this.doi.doiEgfFiles && this.doi.doiEgfFiles.length > 0) {
-        let previews = this.doi.doiEgfFiles.filter(
-          file => file.tyyp === "PREVIEW"
-        );
-        let others = this.doi.doiEgfFiles.filter(
-          file => file.tyyp !== "PREVIEW"
-        );
-
-        let egfFiles = previews.map(preview => {
-          let correspondingOther = others.find(file => {
-            if (preview.addon) return file.id === preview["addon-to"];
-            else return null;
-          });
-
-          if (correspondingOther) {
-            return {
-              ...correspondingOther,
-              preview:
-                preview.id && this.isPreviewImage(preview.title)
-                  ? preview.id
-                  : null,
-              size: this.formatBytes(correspondingOther.size)
-            };
-          } else return null;
-        });
-
-        egfFiles.unshift({
-          preview: null,
-          title: `EGF:${this.doi.doi[0].egf}`,
-          isLink: true
-        });
-
-        return egfFiles;
-      } else return [];
     }
   },
   watch: {
@@ -826,7 +806,6 @@ export default {
 
 .general-info-card >>> .v-data-table__mobile-row__header {
   min-width: 100px;
-  align-self: start;
 }
 
 .general-info-card >>> .v-data-table td {
@@ -848,7 +827,6 @@ export default {
 @media (max-width: 599px) {
   .mobile-override >>> .v-data-table__mobile-row__header {
     min-width: 100px;
-    align-self: start;
   }
 
   .mobile-override >>> .v-data-table td {
