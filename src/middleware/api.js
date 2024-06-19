@@ -1,8 +1,8 @@
 import isEmpty from "lodash/isEmpty";
 
 const api = {
-  geocollectionsUrl: "https://api.geocollections.info/",
-  solrUrl: "https://api.geocollections.info/solr/",
+  geocollectionsUrl: "https://rwapi.geoloogia.info/api/v0/public/",
+  solrUrl: "https://rwapi.geoloogia.info/api/v0/public/solr/",
   // egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
   egfFilesUrl: "https://api.geoloogia.info/egf/file-list/"
 };

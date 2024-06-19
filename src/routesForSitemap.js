@@ -62,7 +62,7 @@ module.exports = [
 
 async function getIdsForSitemap(table, isNew = true) {
   if (table) {
-    const API_URL = "https://api.geocollections.info/";
+    const API_URL = "https://rwapi.geoloogia.info/api/v0/public/";
     let url = API_URL + table + "?";
 
     // if (table === "area") {
