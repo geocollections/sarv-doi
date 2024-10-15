@@ -4,7 +4,7 @@ const api = {
   geocollectionsUrl: "https://rwapi.geoloogia.info/api/v0/public/",
   solrUrl: "https://rwapi.geoloogia.info/api/v0/public/solr/",
   // egfFilesUrl: "https://fond.egt.ee/fond/file-list/"
-  egfFilesUrl: "https://api.geoloogia.info/egf/file-list/"
+  egfFilesUrl: "https://rwapi.geoloogia.info/egf/file-list/"
 };
 
 async function get(child = "", customUrl, isEgfFile = false) {

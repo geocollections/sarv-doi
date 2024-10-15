@@ -710,7 +710,7 @@ export default {
 
     getEgfFile(egfNumber, fileId) {
       if (egfNumber && fileId) {
-        return `https://api.geoloogia.info/egf/get-file/${egfNumber}/${fileId}`;
+        return `https://rwapi.geoloogia.info/egf/get-file/${egfNumber}/${fileId}`;
       } else return "";
     },
 

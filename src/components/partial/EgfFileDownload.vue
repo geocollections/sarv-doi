@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      egfFileUrl: "https://api.geoloogia.info/egf/get-file",
+      egfFileUrl: "https://rwapi.geoloogia.info/egf/get-file",
       loading: false
     };
   },
